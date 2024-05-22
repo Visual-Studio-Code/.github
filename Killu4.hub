@@ -1,0 +1,4 @@
+git branch -m main SECRET-labby
+git fetch origin
+git branch -u origin/SECRET-labby SECRET-labby
+git remote set-head origin -a
