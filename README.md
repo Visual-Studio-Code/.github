@@ -1,1 +1,1 @@
-# .github
+gh update statusRockyspade/.github
