@@ -1,0 +1,1046 @@
+````markdown name=README.md
+# storage.cloud — Google Cloud Storage docs & quickstart (v3)
+
+A compact, practical collection of reference notes, copy‑paste commands, and small example scripts for working with Google Cloud Storage (GCS). This repository is intended to help developers and operators quickly perform common tasks: authenticate, inspect buckets, share objects, configure CORS, merge many objects, and load data into BigQuery.
+
+Status: v3 — streamlined layout, clearer quickstart, and practical patterns for small-to-large datasets.
+
+Table of contents
+- About
+- Repository layout
+- Quickstart (auth, common commands)
+- Sharing & Signed URLs
+- Merging strategies (small → large scale)
+- CORS & browser uploads
+- Examples included
+- Security & best practices
+- Contributing
+- License
+
+About
+storage.cloud collects concise guidance and minimally opinionated examples so you can get things done quickly. The focus is on copy‑pasteable commands and small scripts that are safe to adapt for development and production.
+
+Repository layout
+- index.html — simple landing page for the site
+- docs/
+  - quickstart.md — auth, gsutil/gcloud/bq basics, signed-URL notes
+  - merge-data.md — concise merging strategies (English + Malay focused notes)
+  - signed-urls.md — signed URL reference & tips
+- examples/
+  - merge_csv_gcs.py — Python script to merge CSVs in a GCS prefix
+- cors.json — example CORS configuration
+- LICENSE — suggested MIT license
+
+Quickstart — minimum steps
+1. Install Google Cloud SDK (gcloud, gsutil) and optionally Python client libraries:
+   pip install google-cloud-storage
+
+2. Authenticate (developer / local):
+```bash
+gcloud auth application-default login
+```
+
+3. (Server / app) Use a service account:
+```bash
+gcloud iam service-accounts create my-sa --display-name="My SA"
+
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+(Optional) download a key for local testing:
+```bash
+gcloud iam service-accounts keys create key.json \
+  --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+```
+
+Common commands
+- List buckets:
+```bash
+gsutil ls gs://
+```
+- List objects:
+```bash
+gsutil ls gs://BUCKET/PREFIX/
+```
+- Download/upload:
+```bash
+gsutil cp gs://BUCKET/OBJECT ./local-file
+gsutil cp ./local-file gs://BUCKET/OBJECT
+```
+- Make object public (use sparingly):
+```bash
+gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+```
+- Get an access token for HTTP requests:
+```bash
+gcloud auth print-access-token
+# use it as: Authorization: Bearer <TOKEN>
+```
+
+Sharing & Signed URLs
+- Create a signed URL (gsutil; using a service account key):
+```bash
+gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+```
+Notes:
+- V4 signed URLs maximum expiry: 7 days.
+- Anyone with the URL can access the object until it expires — treat like a secret.
+
+Merging strategies (choose by dataset size)
+- Small / moderate (fits memory): stream with gsutil
+```bash
+gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+```
+- In-place compose (no download) — up to 32 objects per compose:
+```bash
+gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+```
+For >32 objects: perform tree-compose (group into temporary composites and compose them further).
+
+- Large-scale / analytics: load directly into BigQuery (no pre-merge)
+```bash
+bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+```
+
+- Custom transformations / header handling: use the included Python script examples/merge_csv_gcs.py which:
+  - Lists CSVs by prefix
+  - Downloads each file, writes header only once
+  - Uploads the combined CSV back to GCS
+  - (For very large files, prefer streaming or a Dataflow/Dataproc pipeline.)
+
+CORS & browser uploads
+- Example CORS (cors.json included):
+```json
+[
+  {
+    "origin": ["https://example.com"],
+    "method": ["GET", "HEAD", "PUT", "POST"],
+    "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+Apply:
+```bash
+gsutil cors set cors.json gs://BUCKET
+```
+
+Examples included
+- examples/merge_csv_gcs.py — merge CSVs and de-duplicate headers.
+- cors.json — CORS policy example.
+See docs/merge-data.md and docs/quickstart.md for usage and variations.
+
+Security & best practices
+- Use service accounts with least privilege (principle of least privilege).
+- Prefer uniform bucket-level access + IAM roles over ACLs where possible.
+- Avoid embedding long-lived keys in client-side code; use signed URLs for browser access.
+- Monitor with Cloud Audit Logs for object access and signed-URL usage.
+- Consider using CMEK (customer-managed encryption keys) if required by policy.
+
+Contributing
+- Suggest fixes or send PRs. Keep examples minimal and documented.
+- When adding scripts, include:
+  - Purpose and usage examples
+  - Required permissions and dependencies
+  - Safety notes (e.g., memory/time limits)
+
+License
+- MIT by default (see LICENSE). Replace with your preferred license if needed.
+
+Need something added or tailored?
+- I can generate:
+  - A shell helper for tree-compose (>32 objects)
+  - A Dataflow (Apache Beam) starter pipeline for very large merges
+  - Localized site content (Malay/other)
+  - A small CI workflow to lint and test examples
+
+If you want a specific file or script produced now, tell me the filename and target (bash/python/README variant), and I’ll create it.
+````
+````markdown name=README.md
+# storage.cloud — Google Cloud Storage docs & quickstart (v3)
+
+A compact, practical collection of reference notes, copy‑paste commands, and small example scripts for working with Google Cloud Storage (GCS). This repository is intended to help developers and operators quickly perform common tasks: authenticate, inspect buckets, share objects, configure CORS, merge many objects, and load data into BigQuery.
+
+Status: v3 — streamlined layout, clearer quickstart, and practical patterns for small-to-large datasets.
+
+Table of contents
+- About
+- Repository layout
+- Quickstart (auth, common commands)
+- Sharing & Signed URLs
+- Merging strategies (small → large scale)
+- CORS & browser uploads
+- Examples included
+- Security & best practices
+- Contributing
+- License
+
+About
+storage.cloud collects concise guidance and minimally opinionated examples so you can get things done quickly. The focus is on copy‑pasteable commands and small scripts that are safe to adapt for development and production.
+
+Repository layout
+- index.html — simple landing page for the site
+- docs/
+  - quickstart.md — auth, gsutil/gcloud/bq basics, signed-URL notes
+  - merge-data.md — concise merging strategies (English + Malay focused notes)
+  - signed-urls.md — signed URL reference & tips
+- examples/
+  - merge_csv_gcs.py — Python script to merge CSVs in a GCS prefix
+- cors.json — example CORS configuration
+- LICENSE — suggested MIT license
+
+Quickstart — minimum steps
+1. Install Google Cloud SDK (gcloud, gsutil) and optionally Python client libraries:
+   pip install google-cloud-storage
+
+2. Authenticate (developer / local):
+```bash
+gcloud auth application-default login
+```
+
+3. (Server / app) Use a service account:
+```bash
+gcloud iam service-accounts create my-sa --display-name="My SA"
+
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+(Optional) download a key for local testing:
+```bash
+gcloud iam service-accounts keys create key.json \
+  --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+```
+
+Common commands
+- List buckets:
+```bash
+gsutil ls gs://
+```
+- List objects:
+```bash
+gsutil ls gs://BUCKET/PREFIX/
+```
+- Download/upload:
+```bash
+gsutil cp gs://BUCKET/OBJECT ./local-file
+gsutil cp ./local-file gs://BUCKET/OBJECT
+```
+- Make object public (use sparingly):
+```bash
+gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+```
+- Get an access token for HTTP requests:
+```bash
+gcloud auth print-access-token
+# use it as: Authorization: Bearer <TOKEN>
+```
+
+Sharing & Signed URLs
+- Create a signed URL (gsutil; using a service account key):
+```bash
+gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+```
+Notes:
+- V4 signed URLs maximum expiry: 7 days.
+- Anyone with the URL can access the object until it expires — treat like a secret.
+
+Merging strategies (choose by dataset size)
+- Small / moderate (fits memory): stream with gsutil
+```bash
+gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+```
+- In-place compose (no download) — up to 32 objects per compose:
+```bash
+gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+```
+For >32 objects: perform tree-compose (group into temporary composites and compose them further).
+
+- Large-scale / analytics: load directly into BigQuery (no pre-merge)
+```bash
+bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+```
+
+- Custom transformations / header handling: use the included Python script examples/merge_csv_gcs.py which:
+  - Lists CSVs by prefix
+  - Downloads each file, writes header only once
+  - Uploads the combined CSV back to GCS
+  - (For very large files, prefer streaming or a Dataflow/Dataproc pipeline.)
+
+CORS & browser uploads
+- Example CORS (cors.json included):
+```json
+[
+  {
+    "origin": ["https://example.com"],
+    "method": ["GET", "HEAD", "PUT", "POST"],
+    "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+Apply:
+```bash
+gsutil cors set cors.json gs://BUCKET
+```
+
+Examples included
+- examples/merge_csv_gcs.py — merge CSVs and de-duplicate headers.
+- cors.json — CORS policy example.
+See docs/merge-data.md and docs/quickstart.md for usage and variations.
+
+Security & best practices
+- Use service accounts with least privilege (principle of least privilege).
+- Prefer uniform bucket-level access + IAM roles over ACLs where possible.
+- Avoid embedding long-lived keys in client-side code; use signed URLs for browser access.
+- Monitor with Cloud Audit Logs for object access and signed-URL usage.
+- Consider using CMEK (customer-managed encryption keys) if required by policy.
+
+Contributing
+- Suggest fixes or send PRs. Keep examples minimal and documented.
+- When adding scripts, include:
+  - Purpose and usage examples
+  - Required permissions and dependencies
+  - Safety notes (e.g., memory/time limits)
+
+License
+- MIT by default (see LICENSE). Replace with your preferred license if needed.
+
+Need something added or tailored?
+- I can generate:
+  - A shell helper for tree-compose (>32 objects)
+  - A Dataflow (Apache Beam) starter pipeline for very large merges
+  - Localized site content (Malay/other)
+  - A small CI workflow to lint and test examples
+
+If you want a specific file or script produced now, tell me the filename and target (bash/python/README variant), and I’ll create it.
+````
+
+```html name=index.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>storage.cloud — Google Cloud Storage quickstart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; max-width: 980px; margin: 36px auto; line-height: 1.6; padding: 0 20px; color:#111 }
+    pre{ background:#f6f8fa; padding:12px; overflow:auto; border-radius:6px; }
+    header {border-bottom:1px solid #eee; margin-bottom:20px; padding-bottom:12px}
+    h1{margin:0;padding:0}
+    nav a{margin-right:12px;color:#1a73e8;text-decoration:none}
+    small { color:#666 }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>storage.cloud</h1>
+    <p><small>Quick reference and starter content for Google Cloud Storage (GCS)</small></p>
+    <nav>
+      <a href="docs/quickstart.md">Quickstart</a>
+      <a href="docs/merge-data.md">Combine data</a>
+      <a href="docs/signed-urls.md">Signed URLs</a>
+      <a href="examples/merge_csv_gcs.py">Examples</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Overview</h2>
+      <p>storage.cloud collects short guides, command snippets, and small reusable scripts for common GCS workflows:</p>
+      <ul>
+        <li>Authenticated access (gcloud, service accounts, access tokens)</li>
+        <li>Signed URLs for temporary public access</li>
+        <li>CORS configuration for browser-based apps</li>
+        <li>Merging objects (CSV/text) and loading to BigQuery</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Helpful links</h2>
+      <ul>
+        <li><a href="https://storage.cloud.google.com/">storage.cloud.google.com</a> — web UI (requires Google sign-in)</li>
+        <li><a href="https://console.cloud.google.com/storage/browser">Cloud Console — Storage browser</a></li>
+        <li><a href="https://cloud.google.com/storage/docs">GCS documentation</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Get started</h2>
+      <p>Open <code>docs/quickstart.md</code> for commands and brief examples you can run locally. For combining files, see <code>docs/merge-data.md</code> and <code>examples/merge_csv_gcs.py</code>.</p>
+    </section>
+  </main>
+</body>
+</html>
+```
+
+````markdown name=docs/quickstart.md
+# Quickstart — Google Cloud Storage (GCS)
+
+This page collects the most-used commands and short examples for getting started with GCS.
+
+Prerequisites
+- Install Google Cloud SDK (gcloud, gsutil)
+- For programmatic examples, install the relevant client libraries (Python: google-cloud-storage)
+
+Authentication
+- Local developer (Application Default Credentials - ADC):
+```bash
+gcloud auth application-default login
+```
+
+- Service account (recommended for server apps):
+1. Create:
+```bash
+gcloud iam service-accounts create my-sa --display-name="My SA"
+```
+2. Grant roles (example: objectViewer):
+```bash
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+3. (Optional) Create key for local use:
+```bash
+gcloud iam service-accounts keys create key.json \
+  --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+```
+
+Access tokens
+- Print an access token for HTTP Authorization:
+```bash
+gcloud auth print-access-token
+```
+- Use as header: Authorization: Bearer <ACCESS_TOKEN>
+
+Common gsutil commands
+- List buckets:
+```bash
+gsutil ls gs://
+```
+
+- List objects in a bucket/prefix:
+```bash
+gsutil ls gs://BUCKET/PREFIX/
+```
+
+- Download object:
+```bash
+gsutil cp gs://BUCKET/OBJECT ./local-file
+```
+
+- Upload file:
+```bash
+gsutil cp ./local-file gs://BUCKET/OBJECT
+```
+
+- Make object public (use sparingly):
+```bash
+gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+```
+
+Signed URLs
+- Create a signed URL for temporary access (using gsutil with a service account key):
+```bash
+gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+```
+- Signed URLs are valid up to 7 days when using V4 signing.
+
+CORS (for browser clients)
+- Example file: cors.json (in repo)
+- Apply:
+```bash
+gsutil cors set cors.json gs://BUCKET
+```
+
+BigQuery ingestion
+- BigQuery accepts wildcards — you can load many CSVs without pre-merging:
+```bash
+bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+```
+
+Troubleshooting
+- Permission denied: check IAM roles (roles/storage.objectViewer or a custom role).
+- Invalid credentials: re-run `gcloud auth application-default login` or refresh service account tokens.
+- CORS errors: ensure bucket CORS includes your domain and required methods/headers.
+
+Security recommendations
+- Use service accounts with least privilege.
+- Prefer IAM + uniform bucket-level access over ACLs.
+- Do not embed long-lived keys in client-side code; use signed URLs for browser access.
+
+Further reading
+- GCS docs: https://cloud.google.com/storage/docs
+- Signed URLs: https://cloud.google.com/storage/docs/access-control/signed-urls
+- gsutil reference: https://cloud.google.com/storage/docs/gsutil
+````
+
+````markdown name=docs/merge-data.md
+# Gabungkan Semua Data (Combine all data)
+
+Dokumen ringkas (Bahasa Melayu) untuk menggabungkan fail yang tersimpan di Google Cloud Storage.
+
+Sebelum mula
+- Pastikan anda mempunyai akses ke bucket (roles/storage.objectViewer atau storage.objectAdmin untuk penulisan).
+- Jika dataset besar (GB/TB), pertimbangkan Dataflow/Dataproc atau import terus ke BigQuery.
+
+Pilihan umum
+
+1) Quick merge (fail kecil/sederhana)
+- Jika saiz kecil supaya muat dalam memori:
+```bash
+gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+```
+- Risiko: memori dan rangkaian. Pastikan hanya digunakan untuk set kecil.
+
+2) gsutil compose (gabungkan objek di GCS tanpa muat turun)
+- Gabungkan hingga 32 objek per operasi:
+```bash
+gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+```
+- Untuk >32 objek, buat compose berperingkat (tree compose).
+- Nota: compose menggabungkan byte; pastikan setiap objek mempunyai newline yang sesuai dan tidak menggabungkan header berganda.
+
+3) Load terus ke BigQuery (disarankan untuk analisis)
+- BigQuery boleh baca wildcard CSV:
+```bash
+bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+```
+- Kelebihan: skala, tiada pra-gabungan, schema handling.
+
+4) Skrip tersuai (contoh Python)
+- Kelebihan: kawalan penuh (buang header berganda, normalisasi).
+- Lihat `examples/merge_csv_gcs.py` untuk contoh.
+
+Contoh strategi untuk >32 objek menggunakan gsutil compose (pattern)
+- Bahagikan senarai objek kepada kumpulan 32, compose setiap kumpulan ke objek sementara, kemudian compose hasil sementara (ulang sehingga satu objek terakhir).
+- Atau gunakan pipeline Dataflow untuk penstriman dan penulisan semula.
+
+Amalan terbaik
+- Untuk output akhir yang akan dianalitik: lebih baik tulis ke BigQuery atau Parquet (kolumnar) untuk kos dan prestasi.
+- Pastikan logging dan versi objek dihidupkan jika data penting (object versioning).
+- Gunakan encryption keys (CMEK) jika diperlukan.
+
+Jika anda mahu, berikan:
+- Bucket name (contoh: gs://my-bucket/data/)
+- Prefix dan jenis fail (.csv)
+- Saiz anggaran (GB/TB)
+
+Saya akan hasilkan skrip automatik yang sesuai (bash atau Python) untuk anda.
+````
+
+````markdown name=docs/signed-urls.md
+# Signed URLs — Quick reference
+
+Signed URLs grant temporary access to an object without requiring the requester to have a Google account.
+
+Key points
+- Signed URLs include authentication in query parameters.
+- Anyone with the URL can access the object until expiry.
+- Maximum expiry for V4 signed URLs is 7 days.
+
+Create with gsutil (using service account key file)
+```bash
+gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+```
+
+Create programmatically (Python example sketch)
+- Use google-auth library to sign and generate a V4 URL, or use google-cloud-storage's blob.generate_signed_url method.
+- Prefer service account credentials with least privilege.
+
+Security tips
+- Monitor signed-URL usage where possible (Cloud Storage logs).
+- Shorter expiry reduces risk.
+- Do not embed long-lived private keys in public repositories.
+
+When to use
+- Temporary downloads for users without Google accounts.
+- Browser uploads (PUT) when combined with appropriate CORS settings.
+````
+
+```text name=LICENSE
+MIT License
+
+Copyright (c) 2025 Sazwanismail
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+... (Full MIT text can be added here)
+```
+
+```json name=cors.json
+[
+  {
+    "origin": ["https://example.com"],
+    "method": ["GET", "HEAD", "PUT", "POST"],
+    "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+
+```python name=examples/merge_csv_gcs.py
+#!/usr/bin/env python3
+"""
+examples/merge_csv_gcs.py
+
+Merge CSV files in a GCS prefix into one CSV while keeping only the first header.
+
+Requirements:
+  pip install google-cloud-storage
+
+Usage:
+  export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+  python3 examples/merge_csv_gcs.py my-bucket data/prefix/ output/combined.csv
+"""
+import sys
+import csv
+from io import StringIO
+from google.cloud import storage
+
+def merge_csvs(bucket_name, prefix, output_blob_name):
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blobs = sorted([b for b in bucket.list_blobs(prefix=prefix) if b.name.endswith('.csv')])
+
+    if not blobs:
+        print("No CSV files found with prefix:", prefix)
+        return
+
+    out_buf = StringIO()
+    writer = None
+    first = True
+
+    for blob in blobs:
+        print("Reading:", blob.name)
+        # download_as_text loads the object into memory; for very large files use streaming
+        data = blob.download_as_text()
+        reader = csv.reader(StringIO(data))
+        header = next(reader, None)
+        if first:
+            writer = csv.writer(out_buf)
+            if header:
+                writer.writerow(header)
+            for row in reader:
+                writer.writerow(row)
+            first = False
+        else:
+            # skip header for subsequent files
+            for row in reader:
+                writer.writerow(row)
+
+    out_blob = bucket.blob(output_blob_name)
+    out_blob.upload_from_string(out_buf.getvalue(), content_type='text/csv')
+    print(f'Uploaded gs://{bucket_name}/{output_blob_name}')
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: merge_csv_gcs.py BUCKET PREFIX OUTPUT_BLOB")
+        print("Example: merge_csv_gcs.py my-bucket data/ output/combined.csv")
+        sys.exit(1)
+    merge_csvs(sys.argv[1], sys.argv[2], sys.argv[3])
+```
+````markdown name=README.md
+# storage.cloud — Google Cloud Storage docs & examples
+
+A compact, practical collection of reference notes, copy‑paste commands, and small example scripts for working with Google Cloud Storage (GCS). This README is a concise guide and index for the repository contents and the most common GCS workflows: authenticate, inspect buckets, share objects, configure CORS, merge many objects, and load data to BigQuery.
+
+Status: Revised — 2025-11-06  
+Maintainer: Sazwanismail
+
+Quick links
+- Web UI (requires sign-in): https://storage.cloud.google.com/
+- Cloud Console (Storage browser): https://console.cloud.google.com/storage/browser
+- GCS docs: https://cloud.google.com/storage/docs
+
+Repository layout
+- index.html — landing page / site overview
+- docs/
+  - quickstart.md — essential commands and notes
+  - merge-data.md — strategies (English + Malay notes)
+  - signed-urls.md — signed URL reference & tips
+- examples/
+  - merge_csv_gcs.py — Python script to merge CSVs in a GCS prefix
+- cors.json — example CORS policy
+- LICENSE — MIT by default
+
+What this repo is for
+- Fast onboarding for GCS tasks (dev & ops).
+- Copy‑paste safe commands for local work and quick demos.
+- Small example scripts you can adapt for production (with caution).
+- Practical patterns for combining many objects (CSV/text) and for ingesting into BigQuery.
+
+Quickstart (minimum steps)
+1. Install Cloud SDK (gcloud, gsutil) and Python client (optional):
+   ```bash
+   # Cloud SDK: https://cloud.google.com/sdk
+   pip install --upgrade google-cloud-storage
+   ```
+
+2. Authenticate (developer / local):
+   ```bash
+   gcloud auth application-default login
+   ```
+
+3. For server applications, create and use a service account (least privilege):
+   ```bash
+   gcloud iam service-accounts create my-sa --display-name="My SA"
+
+   gcloud projects add-iam-policy-binding PROJECT_ID \
+     --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/storage.objectViewer"
+   ```
+
+   (Optional for local testing)
+   ```bash
+   gcloud iam service-accounts keys create key.json \
+     --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+   export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+   ```
+
+Common commands
+- List buckets:
+  ```bash
+  gsutil ls gs://
+  ```
+- List objects in a prefix:
+  ```bash
+  gsutil ls gs://BUCKET/PREFIX/
+  ```
+- Download / upload:
+  ```bash
+  gsutil cp gs://BUCKET/OBJECT ./local-file
+  gsutil cp ./local-file gs://BUCKET/OBJECT
+  ```
+- Get an access token (for HTTP Authorization header):
+  ```bash
+  gcloud auth print-access-token
+  # header: Authorization: Bearer <TOKEN>
+  ```
+- Make an object public (use sparingly; prefer IAM or signed URLs):
+  ```bash
+  gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+  ```
+
+Sharing & Signed URLs
+- Quick: create a signed URL with gsutil using a service account key:
+  ```bash
+  gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+  ```
+- Notes:
+  - V4 signed URLs support up to 7 days expiry.
+  - Anyone with the URL can access the object while it’s valid — treat like a secret.
+  - For programmatic signing, use google-cloud-storage or google-auth libraries (see docs/signed-urls.md).
+
+Merging strategies (pick by dataset size)
+- Small / moderate (fits in memory)
+  ```bash
+  gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+  ```
+  - Simple and fast for small sets. Watch memory/network use.
+
+- In-place compose (no download; up to 32 objects per compose)
+  ```bash
+  gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+  ```
+  - For >32 objects, use a tree-compose approach (compose in batches, then compose results). See docs/merge-data.md.
+
+- Large-scale / analytics
+  - Load directly to BigQuery (no pre-merge):
+    ```bash
+    bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+    ```
+  - For heavy transformations or streaming merges, use Dataflow (Apache Beam) or Dataproc (Spark).
+
+Example: tree-compose helper (pattern)
+```bash
+# Sketch: group objects into batches of 32, compose each batch to a temp object,
+# then compose the temp objects until a single final object remains.
+# See docs/merge-data.md for a full script or ask for a ready-made helper.
+```
+
+Examples included
+- examples/merge_csv_gcs.py — Merge CSVs by prefix and keep only the first header. Good starting point for small-to-medium datasets.
+- cors.json — CORS policy example for browser uploads/downloads.
+
+CORS & browser uploads
+- Example cors.json:
+  ```json
+  [
+    {
+      "origin": ["https://example.com"],
+      "method": ["GET", "HEAD", "PUT", "POST"],
+      "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  ```
+- Apply:
+  ```bash
+  gsutil cors set cors.json gs://BUCKET
+  ```
+
+Security & best practices
+- Use service accounts with least privilege; do not use personal accounts for long-running services.
+- Prefer uniform bucket-level access + IAM roles instead of ACLs.
+- Avoid embedding long-lived private keys in clients. Use signed URLs or short-lived tokens for browser access.
+- Monitor access with Cloud Audit Logs and consider object versioning and retention.
+- If required by policy, use CMEK (customer-managed encryption keys).
+
+Troubleshooting tips
+- Permission denied: verify IAM roles (roles/storage.objectViewer for reads).
+- Invalid credentials: re-run `gcloud auth application-default login` or refresh service account keys.
+- CORS errors: ensure bucket CORS allows your origin, methods, and response headers.
+- Large merges: avoid downloading many large files into memory; prefer compose, streaming, or Dataflow.
+
+Contributing
+- PRs and issues welcome. When adding scripts, include:
+  - Purpose and example usage
+  - Required permissions and dependencies
+  - Safety notes (memory/time limits)
+- Keep examples small and focused.
+
+License
+- MIT by default. See LICENSE.
+
+Need a file or script now?
+Tell me which of the following you want and I’ll produce it:
+- tree-compose shell helper to safely compose >32 objects
+- Dataflow (Apache Beam) starter pipeline for large merges
+- A localized Malay README or full-site translation
+- A small GitHub Actions workflow to lint/test examples
+
+Alternatively, provide your bucket name, prefix, file type, and approximate size and I’ll generate a ready-to-run script (bash or Python) tailored to your needs.
+````````markdown name=README.md
+# storage.cloud — Google Cloud Storage docs & examples (v5)
+
+A compact, practical collection of reference notes, copy‑paste commands, and small example scripts for working with Google Cloud Storage (GCS). This v5 README is streamlined for quick onboarding and safe reuse — with an included tree‑compose helper pattern for composing >32 objects.
+
+Status: v5 — 2025-11-06  
+Maintainer: Sazwanismail
+
+Table of contents
+- About
+- Repository layout
+- Quickstart (install, auth)
+- Common commands
+- Sharing & signed URLs
+- Merging strategies (small → large)
+- Tree‑compose helper (compose >32 objects)
+- CORS & browser uploads
+- Examples included
+- Security & best practices
+- Troubleshooting
+- Contributing & license
+
+About
+storage.cloud collects minimal, copy‑pasteable guidance and small scripts you can adapt for development and production. Focus: authenticate, inspect buckets, share objects, configure CORS, merge many objects, and ingest to BigQuery.
+
+Repository layout
+- index.html — landing page
+- docs/
+  - quickstart.md
+  - merge-data.md
+  - signed-urls.md
+- examples/
+  - merge_csv_gcs.py
+- cors.json
+- LICENSE
+
+Quickstart (minimum steps)
+1. Install Google Cloud SDK (gcloud, gsutil) and Python client (optional):
+   ```bash
+   # Cloud SDK: https://cloud.google.com/sdk
+   pip install --upgrade google-cloud-storage
+   ```
+
+2. Authenticate (developer / local):
+   ```bash
+   gcloud auth application-default login
+   ```
+
+3. Service account for servers (least privilege):
+   ```bash
+   gcloud iam service-accounts create my-sa --display-name="My SA"
+
+   gcloud projects add-iam-policy-binding PROJECT_ID \
+     --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" \
+     --role="roles/storage.objectViewer"
+   ```
+
+   (Optional for local testing)
+   ```bash
+   gcloud iam service-accounts keys create key.json \
+     --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+   export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+   ```
+
+Common commands
+- List buckets:
+  ```bash
+  gsutil ls gs://
+  ```
+- List objects:
+  ```bash
+  gsutil ls gs://BUCKET/PREFIX/
+  ```
+- Download / upload:
+  ```bash
+  gsutil cp gs://BUCKET/OBJECT ./local-file
+  gsutil cp ./local-file gs://BUCKET/OBJECT
+  ```
+- Make object public (use sparingly):
+  ```bash
+  gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+  ```
+- Get access token:
+  ```bash
+  gcloud auth print-access-token
+  # HTTP header: Authorization: Bearer <TOKEN>
+  ```
+
+Sharing & Signed URLs
+- Create a signed URL (gsutil, service account key):
+  ```bash
+  gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+  ```
+Notes:
+- V4 signed URLs max expiry: 7 days.
+- Anyone with the URL can access the object while valid — treat it as a secret.
+- For programmatic signing, use google-cloud-storage or google-auth libraries (see docs/signed-urls.md).
+
+Merging strategies — choose by dataset size
+- Small / moderate (fits memory)
+  ```bash
+  gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+  ```
+  - Fast for small sets. Watch memory & network.
+
+- In-place compose (no download; up to 32 objects per compose)
+  ```bash
+  gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+  ```
+  - Compose merges object bytes; ensure objects end with newline if needed and avoid duplicate headers.
+
+- Large-scale / analytics
+  - Load directly to BigQuery (no pre-merge):
+    ```bash
+    bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+    ```
+  - For heavy transforms or streaming merges, use Dataflow (Apache Beam) or Dataproc (Spark).
+
+Tree‑compose helper — safe pattern for >32 objects
+- Problem: gsutil compose accepts at most 32 sources. Use a tree-compose (batch then reduce) approach.
+- Sketch helper (bash) — adapt and run in a safe environment. This creates temporary composed objects and composes them until one final object remains.
+
+```bash
+#!/usr/bin/env bash
+# tree-compose.sh: Compose many GCS objects into one final object.
+# Usage: ./tree-compose.sh BUCKET PREFIX output/final.csv
+set -euo pipefail
+
+BUCKET="$1"       # e.g. my-bucket
+PREFIX="$2"       # e.g. data/prefix/
+FINAL_OBJ="$3"    # e.g. output/final.csv
+TMP_PREFIX="tmp/compose-$(date +%s)"
+BATCH_SIZE=32
+
+# list CSVs under prefix
+mapfile -t objects < <(gsutil ls "gs://${BUCKET}/${PREFIX}" | grep -E '\.csv$' || true)
+if [ "${#objects[@]}" -eq 0 ]; then
+  echo "No objects found under gs://${BUCKET}/${PREFIX}"
+  exit 1
+fi
+
+# create batches of up to 32 and compose each to a temp object
+temp_objects=()
+i=0
+while [ $i -lt "${#objects[@]}" ]; do
+  batch=( "${objects[@]:$i:$BATCH_SIZE}" )
+  idx=$((i / BATCH_SIZE))
+  out="gs://${BUCKET}/${TMP_PREFIX}/part-${idx}.csv"
+  echo "Composing batch $idx -> $out"
+  gsutil compose "${batch[@]}" "$out"
+  temp_objects+=("$out")
+  i=$((i + BATCH_SIZE))
+done
+
+# reduce: compose temp objects repeatedly until one remains
+while [ "${#temp_objects[@]}" -gt 1 ]; do
+  new_temp=()
+  i=0
+  while [ $i -lt "${#temp_objects[@]}" ]; do
+    batch=( "${temp_objects[@]:$i:$BATCH_SIZE}" )
+    idx=$((i / BATCH_SIZE))
+    out="gs://${BUCKET}/${TMP_PREFIX}/reduce-${idx}.csv"
+    echo "Composing reduce batch $idx -> $out"
+    gsutil compose "${batch[@]}" "$out"
+    new_temp+=("$out")
+    i=$((i + BATCH_SIZE))
+  done
+  temp_objects=( "${new_temp[@]}" )
+done
+
+# final rename (copy) to desired location
+echo "Final object: ${temp_objects[0]} -> gs://${BUCKET}/${FINAL_OBJ}"
+gsutil cp "${temp_objects[0]}" "gs://${BUCKET}/${FINAL_OBJ}"
+
+# optional: cleanup temp objects
+echo "Cleaning up temporary objects under gs://${BUCKET}/${TMP_PREFIX}/"
+gsutil -m rm -r "gs://${BUCKET}/${TMP_PREFIX}/"
+echo "Done."
+```
+
+Notes:
+- This sketch assumes objects are ready to be concatenated (newline handling, headers). If files contain headers, either remove headers before composing or use a script to write header once (see examples/merge_csv_gcs.py).
+- Test on a small subset before running on production data.
+
+CORS & browser uploads
+- Example cors.json (in repo). Apply:
+  ```bash
+  gsutil cors set cors.json gs://BUCKET
+  ```
+- For browser uploads with signed URLs, ensure CORS allows the upload origin and required headers/methods.
+
+Examples included
+- examples/merge_csv_gcs.py — merge CSVs by prefix while keeping only the first header (for small/medium sets).
+- cors.json — example CORS policy.
+
+Security & best practices
+- Use service accounts with least privilege.
+- Prefer uniform bucket-level access + IAM roles over ACLs.
+- Avoid embedding long-lived keys in client-side code; use signed URLs for browser access.
+- Monitor with Cloud Audit Logs; enable object versioning and retention as needed.
+- Consider CMEK if required.
+
+Troubleshooting
+- Permission denied: confirm IAM role (roles/storage.objectViewer for reads).
+- Invalid credentials: re-run `gcloud auth application-default login` or refresh service account keys.
+- CORS issues: ensure bucket CORS includes your origin, methods, headers.
+- Performance: avoid downloading large numbers of files into memory; prefer compose, streaming, or Dataflow.
+
+Contributing
+- PRs and issues welcome. When adding scripts, include:
+  - Purpose, usage, permissions, and dependencies.
+  - Safety notes (memory/time limits).
+- Keep examples minimal and testable.
+
+License
+- MIT by default. See LICENSE.
+
+Need a ready-to-run script or pipeline?
+Tell me which you want:
+- A fully-tested tree-compose script (I can produce a version with additional safety checks and header handling).
+- A Dataflow (Apache Beam) starter pipeline to merge and transform files at scale.
+- A Malay-localized README and docs.
+Provide bucket name, prefix and approximate size and I’ll generate tailored code.
+````
