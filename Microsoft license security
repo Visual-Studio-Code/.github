@@ -1,0 +1,832 @@
+Microsoft licenses provide access to powerful security tools, but it's crucial to understand that purchasing a license is only the first step. Effective security requires proper configuration, continuous monitoring, and active management of these tools.
+
+The table below summarizes the core security components available across different Microsoft 365 plans to help you understand the layered defense they offer.
+
+| **Security Area** | **Core Microsoft Components** | **Microsoft 365 Business Premium** | **Microsoft 365 E3** | **Microsoft 365 E5** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Identity & Access** | Microsoft Entra ID (Azure AD), Conditional Access, MFA | Included | Included (with Azure AD P1) | ✅ Included (with Azure AD P2 for advanced identity governance & access reviews) |
+| **Threat Protection** | Defender for Endpoint, Defender for Office 365, Microsoft Defender for Cloud Apps | Included | ❌ Limited/Add-on | ✅ Included (full suite, including Cloud App Security) |
+| **Information Protection** | Azure Information Protection, Sensitivity Labels, Data Loss Prevention (DLP) | Included | Included | ✅ Included (with advanced automation & analytics) |
+| **Security & Compliance Management** | Microsoft 365 Defender portal, Compliance Center, Audit | Included | Included | ✅ Included (with advanced automation & analytics) |
+| **Windows Security** | BitLocker Management, Credential Guard, AppLocker, Defender for Endpoint | Varies by Windows edition | ✅ (Windows Enterprise E3 features) | ✅ (Windows Enterprise E5 features, including Defender for Endpoint) |
+
+### 🛡️ Understand the Shared Responsibility Model
+
+A common misconception is that purchasing a Microsoft license, especially a premium one like E5, means Microsoft handles all aspects of your security. In reality, a **Shared Responsibility Model** is in place.
+- **Microsoft's Role**: Securing the cloud infrastructure (physical data centers, network, hypervisors, and foundational cloud services).
+- **Your Responsibility**: Securing what happens *inside* your cloud environment. This includes:
+    - **Configuring Security Tools**: Properly setting up and tuning tools like Multi-Factor Authentication (MFA), data loss prevention policies, and threat detection rules.
+    - **Managing User Access and Devices**: Ensuring that only the right people have the right access and that devices are secure and compliant.
+    - **Monitoring and Response**: Continuously monitoring for threats, investigating alerts, and responding to security incidents.
+
+As one source puts it, "Microsoft gives you the tools. It’s still up to you to use them correctly—and continuously".
+
+### 🚨 Critical Security Gaps to Address
+
+Even with high-tier licenses, your organization is at risk if these areas are neglected:
+- **Unenforced Multi-Factor Authentication (MFA)**: Without MFA configured and enforced, your user accounts remain highly vulnerable to credential-based attacks like phishing.
+- **Lack of 24/7 Monitoring**: Many threats occur outside business hours. Without continuous monitoring, they can go undetected for long periods.
+- **Unsecured External File Sharing**: If permissions for sensitive files are misconfigured, your data can be exposed externally without your knowledge.
+
+### 💡 How to Build an Effective Security Strategy
+
+To close these gaps and build a robust security posture with your Microsoft tools, focus on these steps:
+- **Choose the Right License for Your Needs**: Align licensing with your risk profile.
+    - **Small to Mid-sized Businesses**: **Microsoft 365 Business Premium** provides a strong security foundation that is a significant step up from Business Standard.
+    - **Enterprises with Compliance Needs**: **Microsoft 365 E3** is often the minimum for organizations with complex regulatory requirements.
+    - **Maximum Security and Analytics**: **Microsoft 365 E5** includes top-tier security technologies like automated investigation and response, advanced threat analytics, and privileged identity management.
+- **Proactively Configure and Monitor**: Actively manage your security posture.
+    - **Conduct Regular Configuration Reviews**: Ensure your security settings are optimized and not left at their default states.
+    - **Implement User Behavior Analytics**: Monitor for unusual activity that might indicate a compromised account.
+    - **Develop an Incident Response Plan**: Have a tested plan in place to act quickly during a security incident.
+- **Consider Expert Partnership**: Given the complexity, many organizations benefit from partnering with a managed security service provider that has deep expertise in configuring and monitoring Microsoft security environments 24/7.
+
+I hope this helps you build a more secure environment. If you'd like to dive deeper into the specific features of a particular license, such as E3 or E5, please let me know.
+# Microsoft License Security - Comprehensive Guide
+
+## 🛡️ Complete Microsoft Security Licensing Framework
+
+### 1. Microsoft 365 Security Licensing Matrix
+
+```yaml
+# microsoft-security-licenses.yml
+microsoft_licensing:
+  business_tier:
+    business_basic:
+      price: "$6.00/user/month"
+      security_features:
+        azure_ad: "Basic"
+        threat_protection: "None"
+        information_protection: "None"
+        compliance: "Basic"
+      limitations:
+        - "No advanced security features"
+        - "Basic identity protection only"
+
+    business_standard:
+      price: "$12.50/user/month"
+      security_features:
+        azure_ad: "Basic"
+        threat_protection: "None"
+        information_protection: "None"
+        compliance: "Standard"
+      limitations:
+        - "Missing critical security controls"
+        - "Limited threat protection"
+
+    business_premium:
+      price: "$22.00/user/month"
+      security_features:
+        azure_ad: "Premium P1"
+        threat_protection: "Defender for Business"
+        information_protection: "Azure Information Protection P1"
+        compliance: "Premium"
+        device_management: "Intune"
+      key_security_features:
+        - "Conditional Access"
+        - "Azure AD Identity Protection"
+        - "Safe Links & Attachments"
+        - "Device compliance policies"
+        - "BitLocker management"
+
+  enterprise_tier:
+    e3:
+      price: "$36.00/user/month"
+      security_features:
+        azure_ad: "Premium P1"
+        threat_protection: "Defender for Office 365 P1"
+        information_protection: "Azure Information Protection P1"
+        compliance: "Advanced Compliance"
+        device_management: "Intune"
+      advanced_features:
+        - "Data Loss Prevention (DLP)"
+        - "Advanced eDiscovery"
+        - "Azure AD Privileged Identity Management"
+        - "Cloud App Security"
+
+    e5:
+      price: "$57.00/user/month"
+      security_features:
+        azure_ad: "Premium P2"
+        threat_protection: "Defender for Office 365 P2"
+        information_protection: "Azure Information Protection P2"
+        compliance: "Advanced Compliance + Insider Risk"
+        device_management: "Intune + Endpoint Analytics"
+      premium_security_features:
+        - "Microsoft Defender for Endpoint"
+        - "Azure AD Identity Protection"
+        - "Advanced Threat Analytics"
+        - "Microsoft Cloud App Security"
+        - "Advanced eDiscovery"
+        - "Customer Lockbox"
+        - "Advanced Audit"
+
+  security_add_ons:
+    defender_for_cloud_apps:
+      price: "$5.00/user/month"
+      features:
+        - "Cloud Discovery"
+        - "Conditional Access App Control"
+        - "Data Loss Prevention for cloud apps"
+
+    azure_ad_premium_p2:
+      price: "$9.00/user/month"
+      features:
+        - "Identity Protection"
+        - "Privileged Identity Management"
+        - "Access Reviews"
+
+    defender_for_office_365_p2:
+      price: "$3.00/user/month"
+      features:
+        - "Threat Trackers"
+        - "Attack Simulator"
+        - "Automated Investigation & Response"
+```
+
+### 2. Critical Security Configuration Checklist
+
+```yaml
+# security-configuration-checklist.yml
+identity_security:
+  azure_ad_configuration:
+    mandatory_settings:
+      - "Enable Security Defaults"
+      - "Configure Conditional Access policies"
+      - "Enable Self-Service Password Reset"
+      - "Configure Privileged Identity Management"
+      - "Enable Identity Protection"
+
+  conditional_access_policies:
+    high_risk_scenarios:
+      - name: "Require MFA for all users"
+        conditions:
+          users: "All users"
+          applications: "All cloud apps"
+          conditions: "All"
+        controls: "Require MFA"
+      
+      - name: "Block legacy authentication"
+        conditions:
+          client_apps: "Exchange ActiveSync, IMAP, POP3, SMTP"
+        controls: "Block access"
+      
+      - name: "Require compliant devices"
+        conditions:
+          devices: "All platforms"
+        controls: "Require device to be marked as compliant"
+
+threat_protection:
+  defender_for_office_365:
+    core_configurations:
+      - "Enable Safe Attachments for all mailboxes"
+      - "Configure Safe Links policies"
+      - "Enable Anti-phishing policies"
+      - "Configure Preset Security Policies"
+
+  defender_for_endpoint:
+    configuration_steps:
+      - "Enable next-generation protection"
+      - "Configure attack surface reduction rules"
+      - "Enable endpoint detection and response"
+      - "Configure automated investigation and remediation"
+
+information_protection:
+  data_loss_prevention:
+    policy_recommendations:
+      - "Create DLP policies for sensitive information types"
+      - "Configure policy tips for user education"
+      - "Set up incident reports for policy matches"
+
+  azure_information_protection:
+    label_configuration:
+      - "Create sensitivity labels for classification"
+      - "Configure automatic labeling rules"
+      - "Enable encryption for sensitive documents"
+
+compliance:
+  retention_policies:
+    - "Configure retention policies for email and documents"
+    - "Set up retention labels for specific content types"
+  
+  communication_compliance:
+    - "Configure inappropriate content detection"
+    - "Set up supervisory review policies"
+```
+
+### 3. Advanced Security Implementation Scripts
+
+```powershell
+# Configure-Microsoft365Security.ps1
+<#
+.SYNOPSIS
+    Comprehensive Microsoft 365 Security Configuration Script
+.DESCRIPTION
+    Configures advanced security settings for Microsoft 365 E3/E5 tenants
+.PARAMETER TenantId
+    Azure AD Tenant ID
+.PARAMETER AdminUser
+    Global Administrator username
+#>
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$TenantId,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$AdminUser
+)
+
+# Import required modules
+Import-Module Microsoft.Graph.Identity.SignIns
+Import-Module Microsoft.Graph.Identity.ConditionalAccess
+Import-Module ExchangeOnlineManagement
+Import-Module Microsoft.Online.SharePoint.PowerShell
+
+# Connect to Microsoft Graph
+Connect-MgGraph -TenantId $TenantId -Scopes "Policy.ReadWrite.ConditionalAccess", "Directory.ReadWrite.All"
+
+# Connect to Exchange Online
+Connect-ExchangeOnline -UserPrincipalName $AdminUser
+
+function Enable-SecurityDefaults {
+    <#
+    .DESCRIPTION
+        Enables Azure AD Security Defaults
+    #>
+    try {
+        Write-Host "🔒 Enabling Security Defaults..." -ForegroundColor Yellow
+        
+        $params = @{
+            IsEnabled = $true
+        }
+        
+        Update-MgPolicyIdentitySecurityDefaultEnforcementPolicy -BodyParameter $params
+        Write-Host "✅ Security Defaults enabled successfully" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to enable Security Defaults: $($_.Exception.Message)"
+    }
+}
+
+function New-ConditionalAccessPolicy {
+    <#
+    .DESCRIPTION
+        Creates Conditional Access policies
+    #>
+    param(
+        [string]$DisplayName,
+        [string[]]$Users,
+        [string[]]$Applications,
+        [string[]]$ClientApps,
+        [string]$GrantControl
+    )
+    
+    try {
+        Write-Host "🛡️ Creating Conditional Access Policy: $DisplayName" -ForegroundColor Yellow
+        
+        $conditions = @{
+            applications = @{
+                includeApplications = $Applications
+            }
+            users = @{
+                includeUsers = $Users
+            }
+        }
+        
+        if ($ClientApps) {
+            $conditions.clientAppTypes = $ClientApps
+        }
+        
+        $grantControls = @{
+            operator = "OR"
+            builtInControls = @($GrantControl)
+        }
+        
+        $params = @{
+            displayName = $DisplayName
+            state = "enabled"
+            conditions = $conditions
+            grantControls = $grantControls
+        }
+        
+        New-MgIdentityConditionalAccessPolicy -BodyParameter $params
+        Write-Host "✅ Conditional Access Policy created: $DisplayName" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to create Conditional Access Policy: $($_.Exception.Message)"
+    }
+}
+
+function Configure-DefenderForOffice365 {
+    <#
+    .DESCRIPTION
+        Configures Defender for Office 365 settings
+    #>
+    try {
+        Write-Host "🛡️ Configuring Defender for Office 365..." -ForegroundColor Yellow
+        
+        # Safe Attachments policy
+        $safeAttachmentParams = @{
+            Name = "Global Safe Attachments Policy"
+            Enable = $true
+            Action = "Block"
+            Redirect = $false
+            ActionOnError = $true
+        }
+        New-SafeAttachmentPolicy @safeAttachmentParams
+        
+        # Safe Links policy
+        $safeLinkParams = @{
+            Name = "Global Safe Links Policy"
+            EnableSafeLinksForEmail = $true
+            EnableSafeLinksForTeams = $true
+            ScanUrls = $true
+            DeliverMessageAfterScan = $false
+        }
+        New-SafeLinksPolicy @safeLinkParams
+        
+        # Anti-phishing policy
+        $antiPhishParams = @{
+            Name = "Standard Anti-phishing Policy"
+            Enabled = $true
+            AdminDisplayName = "Standard Anti-phishing Policy"
+            AuthenticationFailAction = "MoveToJmf"
+            SpoofQuarantineTag = "DefaultFullAccessPolicy"
+        }
+        New-AntiPhishPolicy @antiPhishParams
+        
+        Write-Host "✅ Defender for Office 365 configured successfully" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to configure Defender for Office 365: $($_.Exception.Message)"
+    }
+}
+
+function Enable-MicrosoftDefenderForEndpoint {
+    <#
+    .DESCRIPTION
+        Configures Microsoft Defender for Endpoint
+    #>
+    try {
+        Write-Host "🖥️ Configuring Microsoft Defender for Endpoint..." -ForegroundColor Yellow
+        
+        # Configure attack surface reduction rules
+        $asrRules = @(
+            "Block executable content from email client and webmail",
+            "Block Office applications from creating child processes",
+            "Block credential stealing from the Windows local security authority subsystem"
+        )
+        
+        foreach ($rule in $asrRules) {
+            try {
+                Add-MpPreference -AttackSurfaceReductionRules_Ids <RuleGUID> -AttackSurfaceReductionRules_Actions Enabled
+            }
+            catch {
+                Write-Warning "Failed to configure ASR rule: $rule"
+            }
+        }
+        
+        Write-Host "✅ Microsoft Defender for Endpoint configured" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to configure Defender for Endpoint: $($_.Exception.Message)"
+    }
+}
+
+function Configure-InformationProtection {
+    <#
+    .DESCRIPTION
+        Configures Azure Information Protection and DLP
+    #>
+    try {
+        Write-Host "📄 Configuring Information Protection..." -ForegroundColor Yellow
+        
+        # Connect to Security & Compliance Center
+        Connect-IPPSSession -UserPrincipalName $AdminUser
+        
+        # Create sensitivity labels
+        $labels = @(
+            @{Name = "Public"; Tooltip = "Information for public disclosure"; Color = "Green"},
+            @{Name = "Internal"; Tooltip = "Internal business data"; Color = "Yellow"},
+            @{Name = "Confidential"; Tooltip = "Confidential business data"; Color = "Orange"},
+            @{Name = "Highly Confidential"; Tooltip = "Highly sensitive data"; Color = "Red"}
+        )
+        
+        foreach ($label in $labels) {
+            try {
+                New-Label -Name $label.Name -Tooltip $label.Tooltip -Color $label.Color
+            }
+            catch {
+                Write-Warning "Failed to create label: $($label.Name)"
+            }
+        }
+        
+        Write-Host "✅ Information Protection configured" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to configure Information Protection: $($_.Exception.Message)"
+    }
+}
+
+# Main execution
+try {
+    Write-Host "🚀 Starting Microsoft 365 Security Configuration..." -ForegroundColor Cyan
+    
+    # Enable security defaults
+    Enable-SecurityDefaults
+    
+    # Create Conditional Access policies
+    $caPolicies = @(
+        @{
+            DisplayName = "Require MFA for All Users"
+            Users = @("All")
+            Applications = @("All")
+            GrantControl = "mfa"
+        },
+        @{
+            DisplayName = "Block Legacy Authentication"
+            Users = @("All")
+            Applications = @("All")
+            ClientApps = @("exchangeActiveSync", "other")
+            GrantControl = "block"
+        }
+    )
+    
+    foreach ($policy in $caPolicies) {
+        New-ConditionalAccessPolicy @policy
+    }
+    
+    # Configure Defender for Office 365
+    Configure-DefenderForOffice365
+    
+    # Configure Information Protection
+    Configure-InformationProtection
+    
+    Write-Host "🎉 Microsoft 365 Security Configuration Complete!" -ForegroundColor Green
+    Write-Host "📋 Next steps:" -ForegroundColor Yellow
+    Write-Host "   - Review Conditional Access policies" -ForegroundColor White
+    Write-Host "   - Test security configurations" -ForegroundColor White
+    Write-Host "   - Train users on new security requirements" -ForegroundColor White
+    
+}
+catch {
+    Write-Error "Script execution failed: $($_.Exception.Message)"
+}
+finally {
+    # Disconnect sessions
+    Disconnect-ExchangeOnline -Confirm:$false
+    Disconnect-MgGraph
+}
+```
+
+### 4. Security Monitoring and Compliance Script
+
+```powershell
+# Monitor-Microsoft365Security.ps1
+<#
+.SYNOPSIS
+    Microsoft 365 Security Monitoring and Compliance Reporting
+.DESCRIPTION
+    Monitors security settings and generates compliance reports
+#>
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$TenantId,
+    
+    [string]$OutputPath = "./SecurityReports"
+)
+
+# Create output directory
+if (!(Test-Path $OutputPath)) {
+    New-Item -ItemType Directory -Path $OutputPath -Force
+}
+
+function Get-SecurityStatusReport {
+    <#
+    .DESCRIPTION
+        Generates comprehensive security status report
+    #>
+    $report = @{}
+    
+    try {
+        Write-Host "📊 Generating Security Status Report..." -ForegroundColor Yellow
+        
+        # Azure AD Security
+        $report.AzureAD = Get-AzureADSecurityStatus
+        $report.ConditionalAccess = Get-ConditionalAccessStatus
+        $report.MFAStatus = Get-MFAStatus
+        
+        # Defender Status
+        $report.DefenderOffice365 = Get-DefenderOffice365Status
+        $report.DefenderEndpoint = Get-DefenderEndpointStatus
+        
+        # Compliance Status
+        $report.DLPStatus = Get-DLPStatus
+        $report.InformationProtection = Get-InformationProtectionStatus
+        
+        return $report
+    }
+    catch {
+        Write-Error "Failed to generate security report: $($_.Exception.Message)"
+        return $null
+    }
+}
+
+function Get-AzureADSecurityStatus {
+    <#
+    .DESCRIPTION
+        Checks Azure AD security configurations
+    #>
+    $status = @{}
+    
+    try {
+        # Check security defaults
+        $securityDefaults = Get-MgPolicyIdentitySecurityDefaultEnforcementPolicy
+        $status.SecurityDefaultsEnabled = $securityDefaults.IsEnabled
+        
+        # Check MFA registration
+        $mfaUsers = Get-MgReportAuthenticationMethodUserRegistrationDetail -Top 1000
+        $status.MFARegisteredUsers = ($mfaUsers | Where-Object { $_.IsMfaRegistered }).Count
+        $status.TotalUsers = $mfaUsers.Count
+        
+        # Check risky users
+        $riskyUsers = Get-MgIdentityProtectionRiskyUser -Filter "riskLevel eq 'high'"
+        $status.HighRiskUsers = $riskyUsers.Count
+        
+        return $status
+    }
+    catch {
+        Write-Warning "Failed to get Azure AD security status: $($_.Exception.Message)"
+        return $status
+    }
+}
+
+function Get-ConditionalAccessStatus {
+    <#
+    .DESCRIPTION
+        Checks Conditional Access policies
+    #>
+    $status = @{}
+    
+    try {
+        $policies = Get-MgIdentityConditionalAccessPolicy
+        $status.TotalPolicies = $policies.Count
+        $status.EnabledPolicies = ($policies | Where-Object { $_.State -eq "enabled" }).Count
+        
+        # Check for critical policies
+        $criticalPolicyNames = @("*MFA*", "*Block*", "*Require*")
+        $status.HasMFAPolicy = $policies | Where-Object { 
+            $_.DisplayName -like "*MFA*" -and $_.State -eq "enabled"
+        } | Measure-Object | Select-Object -ExpandProperty Count
+        
+        return $status
+    }
+    catch {
+        Write-Warning "Failed to get Conditional Access status: $($_.Exception.Message)"
+        return $status
+    }
+}
+
+function Get-DefenderOffice365Status {
+    <#
+    .DESCRIPTION
+        Checks Defender for Office 365 configurations
+    #>
+    $status = @{}
+    
+    try {
+        # Safe Attachments
+        $safeAttachmentPolicies = Get-SafeAttachmentPolicy
+        $status.SafeAttachmentEnabled = ($safeAttachmentPolicies | Where-Object { $_.Enable -eq $true }).Count -gt 0
+        
+        # Safe Links
+        $safeLinkPolicies = Get-SafeLinksPolicy
+        $status.SafeLinksEnabled = ($safeLinkPolicies | Where-Object { $_.EnableSafeLinksForEmail -eq $true }).Count -gt 0
+        
+        # Anti-phishing
+        $antiPhishPolicies = Get-AntiPhishPolicy
+        $status.AntiPhishEnabled = ($antiPhishPolicies | Where-Object { $_.Enabled -eq $true }).Count -gt 0
+        
+        return $status
+    }
+    catch {
+        Write-Warning "Failed to get Defender for Office 365 status: $($_.Exception.Message)"
+        return $status
+    }
+}
+
+function Export-SecurityReport {
+    <#
+    .DESCRIPTION
+        Exports security report to HTML and CSV
+    #>
+    param($Report)
+    
+    try {
+        # HTML Report
+        $htmlReport = @"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Microsoft 365 Security Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin-bottom: 30px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; }
+        .status-good { color: green; font-weight: bold; }
+        .status-warning { color: orange; font-weight: bold; }
+        .status-bad { color: red; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Microsoft 365 Security Compliance Report</h1>
+    <p>Generated on: $(Get-Date)</p>
+    
+    <div class="section">
+        <h2>Azure AD Security Status</h2>
+        <table>
+            <tr><th>Setting</th><th>Status</th><th>Details</th></tr>
+            <tr><td>Security Defaults</td><td class="status-$(if($Report.AzureAD.SecurityDefaultsEnabled){'good'}else{'bad'})">$($Report.AzureAD.SecurityDefaultsEnabled)</td><td>Basic security settings</td></tr>
+            <tr><td>MFA Registration</td><td>$([math]::Round(($Report.AzureAD.MFARegisteredUsers/$Report.AzureAD.TotalUsers)*100, 2))%</td><td>$($Report.AzureAD.MFARegisteredUsers)/$($Report.AzureAD.TotalUsers) users</td></tr>
+            <tr><td>High Risk Users</td><td class="status-$(if($Report.AzureAD.HighRiskUsers -eq 0){'good'}else{'bad'})">$($Report.AzureAD.HighRiskUsers)</td><td>Users with high risk level</td></tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Conditional Access Status</h2>
+        <table>
+            <tr><th>Setting</th><th>Count</th><th>Details</th></tr>
+            <tr><td>Total Policies</td><td>$($Report.ConditionalAccess.TotalPolicies)</td><td>All CA policies</td></tr>
+            <tr><td>Enabled Policies</td><td>$($Report.ConditionalAccess.EnabledPolicies)</td><td>Active policies</td></tr>
+            <tr><td>MFA Policies</td><td class="status-$(if($Report.ConditionalAccess.HasMFAPolicy -gt 0){'good'}else{'bad'})">$($Report.ConditionalAccess.HasMFAPolicy)</td><td>Policies requiring MFA</td></tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Defender for Office 365 Status</h2>
+        <table>
+            <tr><th>Feature</th><th>Status</th><th>Details</th></tr>
+            <tr><td>Safe Attachments</td><td class="status-$(if($Report.DefenderOffice365.SafeAttachmentEnabled){'good'}else{'bad'})">$($Report.DefenderOffice365.SafeAttachmentEnabled)</td><td>Email attachment scanning</td></tr>
+            <tr><td>Safe Links</td><td class="status-$(if($Report.DefenderOffice365.SafeLinksEnabled){'good'}else{'bad'})">$($Report.DefenderOffice365.SafeLinksEnabled)</td><td>URL protection</td></tr>
+            <tr><td>Anti-phishing</td><td class="status-$(if($Report.DefenderOffice365.AntiPhishEnabled){'good'}else{'bad'})">$($Report.DefenderOffice365.AntiPhishEnabled)</td><td>Phishing protection</td></tr>
+        </table>
+    </div>
+</body>
+</html>
+"@
+        
+        $htmlReport | Out-File -FilePath "$OutputPath/SecurityReport_$(Get-Date -Format 'yyyyMMdd_HHmmss').html"
+        
+        # CSV Report
+        $csvData = @()
+        $csvData += [PSCustomObject]@{
+            Category = "Azure AD"
+            Setting = "Security Defaults"
+            Value = $Report.AzureAD.SecurityDefaultsEnabled
+            Timestamp = Get-Date
+        }
+        
+        $csvData | Export-Csv -Path "$OutputPath/SecurityReport_$(Get-Date -Format 'yyyyMMdd_HHmmss').csv" -NoTypeInformation
+        
+        Write-Host "✅ Security reports exported to: $OutputPath" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Failed to export security report: $($_.Exception.Message)"
+    }
+}
+
+# Main execution
+try {
+    Write-Host "🔍 Starting Microsoft 365 Security Assessment..." -ForegroundColor Cyan
+    
+    # Connect to services
+    Connect-MgGraph -TenantId $TenantId -Scopes "Policy.Read.All", "Reports.Read.All", "IdentityRiskEvent.Read.All"
+    Connect-ExchangeOnline -ShowBanner:$false
+    
+    # Generate security report
+    $securityReport = Get-SecurityStatusReport
+    
+    if ($securityReport) {
+        # Export reports
+        Export-SecurityReport -Report $securityReport
+        
+        # Display summary
+        Write-Host "`n📈 Security Assessment Summary:" -ForegroundColor Yellow
+        Write-Host "   Azure AD Security Defaults: $($securityReport.AzureAD.SecurityDefaultsEnabled)" -ForegroundColor $(if($securityReport.AzureAD.SecurityDefaultsEnabled){'Green'}else{'Red'})
+        Write-Host "   MFA Registration Rate: $([math]::Round(($securityReport.AzureAD.MFARegisteredUsers/$securityReport.AzureAD.TotalUsers)*100, 2))%" -ForegroundColor $(if(($securityReport.AzureAD.MFARegisteredUsers/$securityReport.AzureAD.TotalUsers) -gt 0.9){'Green'}else{'Red'})
+        Write-Host "   High Risk Users: $($securityReport.AzureAD.HighRiskUsers)" -ForegroundColor $(if($securityReport.AzureAD.HighRiskUsers -eq 0){'Green'}else{'Red'})
+        Write-Host "   Conditional Access Policies: $($securityReport.ConditionalAccess.EnabledPolicies)/$($securityReport.ConditionalAccess.TotalPolicies) enabled" -ForegroundColor $(if($securityReport.ConditionalAccess.EnabledPolicies -gt 0){'Green'}else{'Yellow'})
+    }
+    
+}
+catch {
+    Write-Error "Security assessment failed: $($_.Exception.Message)"
+}
+finally {
+    # Cleanup
+    Disconnect-ExchangeOnline -Confirm:$false
+    Disconnect-MgGraph
+}
+```
+
+### 5. Security Compliance Dashboard
+
+```yaml
+# security-compliance-dashboard.yml
+dashboard:
+  name: "Microsoft 365 Security Compliance Dashboard"
+  components:
+    - identity_security:
+        metrics:
+          - "MFA Enrollment Rate"
+          - "Conditional Access Policy Compliance"
+          - "Risky User Count"
+          - "Privileged Account Security"
+    
+    - threat_protection:
+        metrics:
+          - "Malware Detection Rate"
+          - "Phishing Attempts Blocked"
+          - "Safe Links Clicks"
+          - "Threat Quarantine Stats"
+    
+    - information_protection:
+        metrics:
+          - "DLP Policy Matches"
+          - "Sensitivity Label Usage"
+          - "Encrypted Documents"
+          - "Data Loss Incidents"
+    
+    - device_compliance:
+        metrics:
+          - "Compliant Device Percentage"
+          - "Device Risk Levels"
+          - "Security Patch Compliance"
+          - "Antivirus Status"
+
+compliance_frameworks:
+  nist_800_53:
+    controls:
+      - "AC-2: Account Management"
+      - "AC-3: Access Enforcement"
+      - "AC-7: Unsuccessful Logon Attempts"
+      - "SI-3: Malicious Code Protection"
+  
+  iso_27001:
+    controls:
+      - "A.9.2.1: User registration and de-registration"
+      - "A.9.2.2: User access provisioning"
+      - "A.13.2.1: Information transfer policies and procedures"
+  
+  gdpr:
+    controls:
+      - "Article 32: Security of processing"
+      - "Data protection by design and default"
+      - "Data breach notification"
+
+reporting:
+  automated_reports:
+    - "Weekly Security Compliance Report"
+    - "Monthly Risk Assessment"
+    - "Quarterly Security Review"
+    - "Annual Compliance Audit"
+  
+  alerting:
+    high_priority_alerts:
+      - "Multiple failed logins from unusual locations"
+      - "Sensitive data sharing outside organization"
+      - "High-risk user detections"
+      - "Zero-day threat detections"
+```
+
+## 🚀 Implementation Guide
+
+### 1. **Deployment Steps**
+```bash
+# 1. Install required PowerShell modules
+Install-Module Microsoft.Graph -Force
+Install-Module ExchangeOnlineManagement -Force
+Install-Module MSOnline -Force
+
+# 2. Run security configuration
+.\Configure-Microsoft365Security.ps1 -TenantId "your-tenant-id" -AdminUser "admin@yourdomain.com"
+
+# 3. Generate initial security assessment
+.\Monitor-Microsoft365Security.ps1 -TenantId "your-tenant-id" -OutputPath "./SecurityReports"
+```
+
+### 2. **Continuous Monitoring Setup**
+- Schedule security assessment scripts to run daily
+- Set up alerts for critical security events
+- Configure automated reporting to security team
+
+### 3. **Compliance Framework Alignment**
+- Map Microsoft security controls to organizational compliance requirements
+- Configure automated compliance reporting
+- Set up audit trails for regulatory requirements
+
+This comprehensive Microsoft license security framework provides complete coverage for identity protection, threat prevention, information security, and compliance monitoring across all Microsoft 365 licensing tiers!
