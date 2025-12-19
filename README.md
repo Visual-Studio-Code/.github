@@ -1,1 +1,1 @@
-# .github
+# .github/https://code.visualstudio.com/
