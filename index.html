@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizikos Skaičiuoklė | EUR/USD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-input: #0d1421;
+            --border-color: #2d3748;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-orange: #f59e0b;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            background-image:
+                radial-gradient(ellipse at top, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .instrument-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .instrument-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .calculator-container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue), #6366f1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .card-header span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .input-wrapper input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-wrapper .suffix {
+            position: absolute;
+            right: 1rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .input-wrapper input.has-suffix {
+            padding-right: 3.5rem;
+        }
+
+        .direction-selector {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .direction-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .direction-btn:hover {
+            border-color: var(--text-muted);
+        }
+
+        .direction-btn.buy.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .direction-btn.sell.active {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-blue), #6366f1);
+            border: none;
+            border-radius: 0.75rem;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Results Card */
+        .results-card {
+            background: linear-gradient(135deg, var(--bg-card), #1e293b);
+            border: 1px solid var(--border-color);
+        }
+
+        .results-card .card-header .icon {
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .result-item {
+            background: var(--bg-input);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .result-item.highlight {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .result-item .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .result-item.highlight .value {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-item .unit {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .result-item.risk .value {
+            color: var(--accent-orange);
+        }
+
+        .result-item.pips .value {
+            color: var(--accent-blue);
+        }
+
+        /* Info section */
+        .info-section {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .info-section h3 {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-section ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .info-section li {
+            padding: 0.25rem 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .info-section li span:last-child {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-item.highlight {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Rizikos Skaičiuoklė</h1>
+        <p>Apskaičiuokite optimalų pozicijos dydį</p>
+    </header>
+
+    <div class="instrument-badge">
+        <span class="dot"></span>
+        <span>EUR/USD</span>
+    </div>
+
+    <main class="calculator-container">
+        <!-- Input Card -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon">📊</div>
+                <div>
+                    <h2>Parametrai</h2>
+                    <span>Įveskite savo prekybos duomenis</span>
+                </div>
+            </div>
+
+            <div class="direction-selector">
+                <button class="direction-btn buy active" onclick="setDirection('buy')">
+                    <span>▲</span> Long (Pirkti)
+                </button>
+                <button class="direction-btn sell" onclick="setDirection('sell')">
+                    <span>▼</span> Short (Parduoti)
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label for="accountSize">Sąskaitos dydis</label>
+                <div class="input-wrapper">
+                    <input type="number" id="accountSize" placeholder="10000" class="has-suffix" step="100">
+                    <span class="suffix">USD</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="riskPercent">Rizika nuo sąskaitos</label>
+                <div class="input-wrapper">
+                    <input type="number" id="riskPercent" placeholder="1" class="has-suffix" step="0.1" min="0.1" max="100">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="entryPrice">Entry kaina</label>
+                <div class="input-wrapper">
+                    <input type="number" id="entryPrice" placeholder="1.08500" step="0.00001">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="stopLoss">Stop Loss kaina</label>
+                <div class="input-wrapper">
+                    <input type="number" id="stopLoss" placeholder="1.08300" step="0.00001">
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculate()">
+                Skaičiuoti pozicijos dydį
+            </button>
+        </div>
+
+        <!-- Results Card -->
+        <div class="card results-card" id="resultsCard" style="display: none;">
+            <div class="card-header">
+                <div class="icon">✓</div>
+                <div>
+                    <h2>Rezultatai</h2>
+                    <span>Rekomenduojami prekybos parametrai</span>
+                </div>
+            </div>
+
+            <div class="result-grid">
+                <div class="result-item highlight">
+                    <div class="label">Pozicijos dydis</div>
+                    <div class="value" id="positionSize">0.00</div>
+                    <div class="unit">lots</div>
+                </div>
+
+                <div class="result-item risk">
+                    <div class="label">Rizikos suma</div>
+                    <div class="value" id="riskAmount">$0</div>
+                </div>
+
+                <div class="result-item pips">
+                    <div class="label">Atstumas iki SL</div>
+                    <div class="value" id="pipsDistance">0</div>
+                    <div class="unit">pips</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="label">Units</div>
+                    <div class="value" id="unitsSize">0</div>
+                </div>
+
+                <div class="result-item">
+                    <div class="label">Pip vertė</div>
+                    <div class="value" id="pipValue">$0</div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>ℹ️ Informacija</h3>
+                <ul>
+                    <li><span>Instrumentas:</span> <span>EUR/USD</span></li>
+                    <li><span>1 Standard Lot:</span> <span>100,000 units</span></li>
+                    <li><span>1 Pip vertė (1 lot):</span> <span>$10.00</span></li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Rizikos skaičiuoklė v1.0 | Ateityje: Futures instrumentai</p>
+    </footer>
+
+    <script>
+        let tradeDirection = 'buy';
+
+        function setDirection(direction) {
+            tradeDirection = direction;
+            document.querySelectorAll('.direction-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.direction-btn.${direction}`).classList.add('active');
+        }
+
+        function calculate() {
+            // Get input values
+            const accountSize = parseFloat(document.getElementById('accountSize').value);
+            const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+            const entryPrice = parseFloat(document.getElementById('entryPrice').value);
+            const stopLoss = parseFloat(document.getElementById('stopLoss').value);
+
+            // Validation
+            if (!accountSize || !riskPercent || !entryPrice || !stopLoss) {
+                alert('Prašome užpildyti visus laukus');
+                return;
+            }
+
+            if (entryPrice === stopLoss) {
+                alert('Entry kaina ir Stop Loss negali būti vienodi');
+                return;
+            }
+
+            // Validate direction vs stop loss
+            if (tradeDirection === 'buy' && stopLoss >= entryPrice) {
+                alert('Long pozicijai Stop Loss turi būti žemiau Entry kainos');
+                return;
+            }
+            if (tradeDirection === 'sell' && stopLoss <= entryPrice) {
+                alert('Short pozicijai Stop Loss turi būti aukščiau Entry kainos');
+                return;
+            }
+
+            // Calculations
+            // EUR/USD: 1 pip = 0.0001, 1 standard lot = 100,000 units
+            // Pip value for 1 standard lot EUR/USD = $10
+
+            const pipSize = 0.0001;
+            const standardLotSize = 100000;
+            const pipValuePerLot = 10; // $10 per pip for 1 standard lot
+
+            // Calculate risk amount in USD
+            const riskAmount = accountSize * (riskPercent / 100);
+
+            // Calculate pips distance
+            const priceDifference = Math.abs(entryPrice - stopLoss);
+            const pipsDistance = priceDifference / pipSize;
+
+            // Calculate position size in lots
+            // Position Size = Risk Amount / (Pips × Pip Value per Lot)
+            const positionSizeLots = riskAmount / (pipsDistance * pipValuePerLot);
+
+            // Calculate units
+            const units = positionSizeLots * standardLotSize;
+
+            // Calculate actual pip value for this position
+            const actualPipValue = positionSizeLots * pipValuePerLot;
+
+            // Update UI
+            document.getElementById('positionSize').textContent = positionSizeLots.toFixed(2);
+            document.getElementById('riskAmount').textContent = '$' + riskAmount.toFixed(2);
+            document.getElementById('pipsDistance').textContent = pipsDistance.toFixed(1);
+            document.getElementById('unitsSize').textContent = Math.round(units).toLocaleString();
+            document.getElementById('pipValue').textContent = '$' + actualPipValue.toFixed(2);
+
+            // Show results
+            document.getElementById('resultsCard').style.display = 'block';
+
+            // Scroll to results
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Allow Enter key to calculate
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    calculate();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
