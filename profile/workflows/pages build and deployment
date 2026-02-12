@@ -1,0 +1,31 @@
+Current runner version: '2.331.0'
+Runner Image Provisioner
+  Hosted Compute Agent
+  Version: 20260115.477
+  Commit: 4b342d620503cbe250a3154040964899ea7c9b00
+  Build Date: 2026-01-15T22:32:41Z
+  Worker ID: {01d4cfd4-e8ed-4acf-9f0e-1ac0b4a33916}
+  Azure Region: eastus2
+Operating System
+  Ubuntu
+  24.04.3
+  LTS
+Runner Image
+  Image: ubuntu-24.04
+  Version: 20260119.4.1
+  Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260119.4/images/ubuntu/Ubuntu2404-Readme.md
+  Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260119.4
+GITHUB_TOKEN Permissions
+  Contents: read
+  Metadata: read
+  Pages: write
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Download action repository 'actions/jekyll-build-pages@v1' (SHA:44a6e6beabd48582f863aeeb6cb2151cc1716697)
+Download action repository 'actions/upload-pages-artifact@v3' (SHA:56afc609e74202658d3ffba0e8f6dda462b719fa)
+Getting action download info
+Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Complete job name: build
