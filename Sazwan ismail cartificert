@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhamad Sazwan Ismail · Profil Lengkap</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter + JetBrains Mono (big data vibe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #030712;
+            font-family: "Inter", sans-serif;
+            color: #e5e7eb;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            background-image: radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.05) 0%, transparent 30%),
+                              radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                              repeating-linear-gradient(45deg, rgba(55, 65, 81, 0.1) 0px, rgba(55, 65, 81, 0.1) 1px, transparent 1px, transparent 10px);
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #1e293b;
+            border-radius: 3rem;
+            box-shadow: 0 25px 60px -15px rgba(0, 180, 255, 0.3), 0 0 0 1px #0f172a inset;
+            overflow: hidden;
+            position: relative;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00e0ff, #3b82f6, #8b5cf6, #ec4899);
+            z-index: 5;
+        }
+        .hero {
+            padding: 3rem 2.5rem;
+            background: linear-gradient(160deg, #0b1a2e, #0f172a);
+            border-bottom: 2px solid #1e2a3a;
+            position: relative;
+        }
+        .hero::after {
+            content: "⚡ sazwan96 ⚡";
+            position: absolute;
+            bottom: 1.2rem;
+            right: 2rem;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 1.2rem;
+            color: #22d3ee;
+            opacity: 0.3;
+            letter-spacing: 3px;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #e0f2fe, #7dd3fc, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+        }
+        .hero .sub {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .badge-dataset {
+            background: #1e293b;
+            border-left: 6px solid #0ea5e9;
+            padding: 0.4rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 500;
+            color: #bae6fd;
+            font-family: "JetBrains Mono", monospace;
+        }
+        .hero-quote {
+            margin-top: 2rem;
+            max-width: 850px;
+            background: #1a2635;
+            padding: 1.5rem 2rem;
+            border-radius: 2rem;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 25px -10px #00000080;
+            border-left: 6px solid #2dd4bf;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 0.8rem;
+            color: #f0f9ff;
+        }
+        .section-title i {
+            background: #0f1825;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            color: #2dd4bf;
+            font-size: 2rem;
+        }
+        .section-title::before {
+            content: "⟨ ";
+            font-family: "JetBrains Mono", monospace;
+            color: #38bdf8;
+            font-size: 2rem;
+        }
+        .section-title::after {
+            content: " ⟩";
+            font-family: "JetBrains Mono", monospace;
+            color: #38bdf8;
+            font-size: 2rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .data-card {
+            background: #131e2c;
+            border: 1px solid #2a3748;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: 0 10px 15px -10px #000000;
+        }
+        .data-card:hover {
+            border-color: #0ea5e9;
+            transform: translateY(-5px);
+            box-shadow: 0 25px 30px -15px #0ea5e940;
+        }
+        .data-card h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #a5f3fc;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .email-list {
+            list-style: none;
+        }
+        .email-list li {
+            background: #1f2b39;
+            margin-bottom: 0.7rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid #334155;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            word-break: break-all;
+        }
+        .email-list i {
+            color: #2dd4bf;
+            width: 1.4rem;
+        }
+        .skill-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .skill-tag {
+            background: #1f2f40;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-left: 3px solid #0ea5e9;
+            color: #cbd5e1;
+            font-family: "JetBrains Mono", monospace;
+        }
+        .exp-item {
+            margin-bottom: 1.5rem;
+        }
+        .exp-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #bae6fd;
+        }
+        .exp-meta {
+            color: #6b7280;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .datachain-block {
+            background: #0b121f;
+            border: 2px solid #2563eb;
+            border-radius: 2.5rem;
+            padding: 2rem;
+            font-family: "JetBrains Mono", monospace;
+            box-shadow: 0 0 30px #2563eb20;
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .datachain-block::after {
+            content: "01001000 01100001 01110011 01101000 00100000 01110011 01101001 01100111 01101110 01100101 01100100";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 0.7rem;
+            color: #2563eb30;
+            white-space: pre;
+            pointer-events: none;
+        }
+        .hash-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px dashed #2d3a4e;
+            padding: 0.8rem 0;
+        }
+        .hash-label {
+            min-width: 100px;
+            color: #94a3b8;
+        }
+        .hash-value {
+            color: #fbbf24;
+            word-break: break-all;
+        }
+        .company-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a2635;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #2d3748;
+        }
+        .company-table th {
+            background: #0f1825;
+            color: #9ca3af;
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #2563eb;
+        }
+        .company-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #2a3748;
+        }
+        .contact-panel {
+            background: #0f1825;
+            border-radius: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #2a3748;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            background: #1f2b39;
+            border: 1px solid #334155;
+            border-radius: 60px;
+            color: white;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+        .form-group textarea {
+            border-radius: 30px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #2dd4bf;
+            outline: none;
+            box-shadow: 0 0 0 2px #2dd4bf30;
+        }
+        .btn-bigdata {
+            background: linear-gradient(145deg, #2563eb, #1e3a8a);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 10px 20px -10px #1e3a8a;
+        }
+        .btn-bigdata:hover {
+            transform: scale(1.02);
+            background: #1e3a8a;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0b1422;
+            border-top: 1px solid #1e3452;
+            color: #6b7b94;
+            font-family: "JetBrains Mono", monospace;
+        }
+        footer a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+        hr {
+            border: 1px solid #1e293b;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Muhamad Sazwan<br>Bin Ismail</h1>
+        <div class="sub">
+            <span>⌨️ Pengasas Teknologi & Usahawan Digital</span>
+            <span class="badge-dataset"><i class="fas fa-database"></i> @sazwan96</span>
+        </div>
+        <div class="hero-quote">
+            <i class="fas fa-quote-left" style="color:#2dd4bf;"></i> 
+            “Profesional teknologi dalam blockchain, automasi, kejuruteraan elektrik. Memacu inovasi melalui integrasi AI & penyelesaian data‑driven untuk tenaga dan digital.”
+        </div>
+    </div>
+
+    <!-- MAKLUMAT PERIBADI -->
+    <section style="padding: 2.5rem 2.5rem 0;">
+        <div class="section-title"><i class="fas fa-id-card"></i> IDENTITY NODE</div>
+        <div class="grid-2">
+            <div class="data-card">
+                <h3><i class="fas fa-user"></i> Personal</h3>
+                <ul class="email-list">
+                    <li><i class="fas fa-flag"></i> Warganegara: Malaysia</li>
+                    <li><i class="fas fa-calendar-alt"></i> 22 Oktober 1996</li>
+                    <li><i class="fas fa-language"></i> Melayu (Native) · English (Advanced)</li>
+                    <li><i class="fas fa-map-marker-alt"></i> F262 Kg Pinang Tunggal, 08000 Sg Petani, Kedah</li>
+                </ul>
+            </div>
+            <div class="data-card">
+                <h3><i class="fas fa-envelope"></i> Contact Ingress</h3>
+                <ul class="email-list">
+                    <li><i class="fas fa-envelope"></i> sazwan96@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> xxsazend12345@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> sazwanismail98@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> sazwanismail96@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> Sazwan96@outlook.com</li>
+                    <li><i class="fas fa-graduation-cap"></i> Muhamadsazwanbinismail@mid.edu</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PENDIDIKAN & KELAYAKAN -->
+    <section style="padding: 2.5rem;">
+        <div class="section-title"><i class="fas fa-graduation-cap"></i> EDUCATION · CERTIFICATIONS</div>
+        <div class="grid-2">
+            <div class="data-card">
+                <h3>🎓 Ijazah & Sarjana</h3>
+                <p><strong>B.Eng. Kejuruteraan Elektrik</strong> – Universiti Teknologi MARA (UiTM)</p>
+                <p><strong>M.Sc. Kecerdasan Buatan</strong> – Universiti Teknologi Malaysia (UTM) · tamat 2025</p>
+                <p><strong>Sijil Profesional Blockchain Mining</strong> (2023)</p>
+                <p><strong>Sijil Profesional AI & Big Data</strong> (2024)</p>
+            </div>
+            <div class="data-card">
+                <h3>📊 Kelayakan Tambahan</h3>
+                <p>Python, Java, C++ · Portfolio AI/Data Science</p>
+                <p>CGPA ≥ 3.0 (2.75+ pengalaman kerja)</p>
+                <p>Latihan Teknologi Elektrik – TNB (2015–2019)</p>
+                <p>Professor of MSIS – Oklahoma State University</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PENGALAMAN KERJA (ringkas) -->
+    <section style="padding: 0 2.5rem;">
+        <div class="section-title"><i class="fas fa-briefcase"></i> EXPERIENCE STREAMS</div>
+        <div class="grid-2">
+            <div class="data-card">
+                <h3>📌 Pengasas / CEO</h3>
+                <div class="exp-item"><span class="exp-title">Sazwan Solutions</span> <span class="exp-meta">2019–kini</span> <span class="exp-desc">AI, blockchain, automasi</span></div>
+                <div class="exp-item"><span class="exp-title">Sazwan Hobby Shop</span> <span class="exp-meta">2023–kini</span> <span class="exp-desc">E‑dagang + NFT</span></div>
+                <div class="exp-item"><span class="exp-title">End AI Global</span> <span class="exp-meta">2024–kini</span> <span class="exp-desc">AI sumber terbuka etikal</span></div>
+                <div class="exp-item"><span class="exp-title">Fairbase</span> <span class="exp-meta">2024–kini</span> <span class="exp-desc">Data & security</span></div>
+                <div class="exp-item"><span class="exp-title">Sazwan Digital</span> <span class="exp-meta">2024–kini</span> <span class="exp-desc">Perkhidmatan digital</span></div>
+                <div class="exp-item"><span class="exp-title">Muhamad Sazwan Bin Ismail Enterprise</span> <span class="exp-meta">2023–2024</span> <span class="exp-desc">Konsultansi digital</span></div>
+            </div>
+            <div class="data-card">
+                <h3>📌 Teknikal / Konsultansi</h3>
+                <div class="exp-item"><span class="exp-title">SAP – ERP Implementation Specialist</span> <span class="exp-meta">2024–kini</span></div>
+                <div class="exp-item"><span class="exp-title">AdGuard · Software Developer</span> <span class="exp-meta">2022–kini</span></div>
+                <div class="exp-item"><span class="exp-title">PETRONAS Carigali · Production Technologist</span></div>
+                <div class="exp-item"><span class="exp-title">ISS Data · Data Analyst</span> <span class="exp-meta">2023–2024</span></div>
+                <div class="exp-item"><span class="exp-title">Salesforce · CRM System Analyst</span> <span class="exp-meta">2023</span></div>
+                <div class="exp-item"><span class="exp-title">HubSpot · Digital Marketing & Automation Consultant</span> <span class="exp-meta">2023</span></div>
+                <div class="exp-item"><span class="exp-title">TNB · Technical Executive / Technician</span> <span class="exp-meta">2013–2025</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PEMILIKAN SYARIKAT (jadual lengkap) -->
+    <section style="padding: 2.5rem;">
+        <div class="section-title"><i class="fas fa-building"></i> ENTITY GRAPH · PEMILIKAN</div>
+        <table class="company-table">
+            <thead><tr><th>Syarikat</th><th>Fokus</th><th>Peranan</th><th>Tahun</th></tr></thead>
+            <tbody>
+                <tr><td>Sazwan Solutions</td><td>AI, blockchain, automasi</td><td>Founder & CEO</td><td>2019–kini</td></tr>
+                <tr><td>Sazwan Hobby Shop</td><td>E-dagang + NFT</td><td>Founder</td><td>2023–kini</td></tr>
+                <tr><td>End AI Global</td><td>AI sumber terbuka etikal</td><td>Co-Founder</td><td>2024–kini</td></tr>
+                <tr><td>Fairbase</td><td>Keselamatan & pengurusan data</td><td>Founder</td><td>2024–kini</td></tr>
+                <tr><td>Sazwan Digital</td><td>Perkhidmatan digital</td><td>Founder</td><td>2024–kini</td></tr>
+                <tr><td>Muhamad Sazwan Bin Ismail Enterprise</td><td>Konsultansi digital (CRM, ERP, automasi)</td><td>Founder</td><td>2023–2024</td></tr>
+                <tr><td>Research Contributor</td><td>IGI Global</td><td>Penyelidik</td><td>2023–2024</td></tr>
+            </tbody>
+        </table>
+        <p style="margin-top:1rem; color:#9ca3af;">* Juga terlibat sebagai Mastermind / rakan strategik dengan Microsoft, Google, Meta, Salesforce, HubSpot, SAP, TNB, Petronas, ByteDance, Alipay, ISO, IUCN, CS Global, GitHub, GitLab, The Org, Copilot.com.</p>
+    </section>
+
+    <!-- RAKAN INDUSTRI & KOLABORASI -->
+    <section style="padding: 0 2.5rem;">
+        <div class="section-title"><i class="fas fa-handshake"></i> STRATEGIC PARTNERS</div>
+        <div class="skill-cloud">
+            <span class="skill-tag">Microsoft (Azure)</span>
+            <span class="skill-tag">Google (BigQuery)</span>
+            <span class="skill-tag">Meta (FB/IG/WA)</span>
+            <span class="skill-tag">Salesforce</span>
+            <span class="skill-tag">HubSpot</span>
+            <span class="skill-tag">SAP</span>
+            <span class="skill-tag">TNB</span>
+            <span class="skill-tag">PETRONAS</span>
+            <span class="skill-tag">JurisTech</span>
+            <span class="skill-tag">CADS</span>
+            <span class="skill-tag">YTL Power</span>
+            <span class="skill-tag">Telekom Malaysia</span>
+            <span class="skill-tag">ByteDance</span>
+            <span class="skill-tag">Alipay</span>
+            <span class="skill-tag">ISO</span>
+            <span class="skill-tag">IUCN</span>
+            <span class="skill-tag">CS Global</span>
+            <span class="skill-tag">GitHub (Microsoft)</span>
+            <span class="skill-tag">GitLab</span>
+            <span class="skill-tag">The Org</span>
+            <span class="skill-tag">Copilot.com</span>
+        </div>
+    </section>
+
+    <!-- PROJEK UTAMA & INOVASI -->
+    <section style="padding: 2.5rem;">
+        <div class="section-title"><i class="fas fa-microchip"></i> INNOVATION PIPELINE</div>
+        <div class="grid-3">
+            <div class="data-card"><h3>🤖 AI Engine (Industrial)</h3> Computer vision, deep learning untuk automasi kilang – Sazwan Solutions.</div>
+            <div class="data-card"><h3>🖼️ NFT & Blockchain Kolektibel</h3> Pemilikan koleksi fizikal melalui NFT – Sazwan Hobby Shop.</div>
+            <div class="data-card"><h3>🌐 End AI Global – Open Source AI</h3> Model bahasa etikal percuma untuk komuniti.</div>
+            <div class="data-card"><h3>🔐 SHA-256 Hash Simulation</h3> Simulasi algoritma hashing SHA-256 (GitHub).</div>
+            <div class="data-card"><h3>⚡ Smart Power Grid Monitoring</h3> IoT + data analytics – GitHub repo.</div>
+            <div class="data-card"><h3>📄 Digital Resume Generator</h3> Platform menjana resume automatik (Giblub).</div>
+        </div>
+    </section>
+
+    <!-- BLOCKCHAIN & DIGITAL CERTIFICATE -->
+    <section style="padding: 0 2.5rem;">
+        <div class="section-title"><i class="fas fa-certificate"></i> CHAIN·VERIFY</div>
+        <div class="datachain-block">
+            <div class="hash-row"><span class="hash-label">Nonce</span><span class="hash-value">518,676</span></div>
+            <div class="hash-row"><span class="hash-label">Hash</span><span class="hash-value">00000d6f...e39d46d</span></div>
+            <div class="hash-row"><span class="hash-label">SHA‑256</span><span class="hash-value">32D8A53CC4C299E60424CD0DE96D3B06575D51...</span></div>
+            <div class="hash-row"><span class="hash-label">SHA‑512</span><span class="hash-value">CF83E1357EEFB8BDF1542850D66D8007D620...</span></div>
+            <div class="hash-row"><span class="hash-label">SHA‑1</span><span class="hash-value">A591A6D40BF420404A011733CFB7B190D62C65...</span></div>
+            <div class="hash-row"><span class="hash-label">MD5</span><span class="hash-value">E10ADC3949BA59ABBE56E057F20F88...</span></div>
+            <div style="display:flex; gap:1.5rem; align-items:center; margin-top:1.5rem;">
+                <div style="background:#1e293b; padding:1rem; border-radius:2rem;"><i class="fas fa-qrcode fa-2x" style="color:#2dd4bf;"></i></div>
+                <span style="color:#9ca3af;"><a href="https://sazwan96.github.io" target="_blank">https://sazwan96.github.io</a> · verified by ChatGPT Blockchain Simulator</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEMAHIRAN TEKNIKAL (senarai penuh) -->
+    <section style="padding: 2.5rem;">
+        <div class="section-title"><i class="fas fa-code"></i> STACK · DATA OPS</div>
+        <div class="skill-cloud">
+            <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Solidity</span><span class="skill-tag">Rust</span>
+            <span class="skill-tag">TensorFlow</span><span class="skill-tag">PyTorch</span><span class="skill-tag">OpenCV</span><span class="skill-tag">LangChain</span>
+            <span class="skill-tag">Docker</span><span class="skill-tag">Kubernetes</span><span class="skill-tag">GitHub Actions</span><span class="skill-tag">GitLab CI</span>
+            <span class="skill-tag">React</span><span class="skill-tag">Node.js</span><span class="skill-tag">Next.js</span><span class="skill-tag">SQL</span><span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">Firebase</span><span class="skill-tag">Salesforce</span><span class="skill-tag">HubSpot</span><span class="skill-tag">SAP</span>
+            <span class="skill-tag">Microsoft Azure</span><span class="skill-tag">Google Cloud</span><span class="skill-tag">AWS</span>
+            <span class="skill-tag">HDFS</span><span class="skill-tag">Spark</span><span class="skill-tag">Delta Lake</span><span class="skill-tag">BigQuery</span>
+            <span class="skill-tag">SHA-256</span><span class="skill-tag">Kriptografi</span><span class="skill-tag">Analisis Data</span>
+        </div>
+    </section>
+
+    <!-- PENGIKTIRAFAN & RANKING -->
+    <section style="padding: 0 2.5rem;">
+        <div class="section-title"><i class="fas fa-trophy"></i> PERCENTILE · 2025</div>
+        <div class="grid-2">
+            <div class="data-card">🏆 Top 5% pakar AI/Blockchain global</div>
+            <div class="data-card">🌍 Top 3% pemimpin inovasi teknologi Asia</div>
+            <div class="data-card">🇲🇾 Top 1% transformasi digital Malaysia</div>
+            <div class="data-card">🔍 “sazwan96” dalam 5 carian teknologi Malaysia</div>
+        </div>
+    </section>
+
+    <!-- MISI & MOTO -->
+    <section style="padding: 2.5rem;">
+        <div class="section-title"><i class="fas fa-bullseye"></i> MISSION</div>
+        <div style="background:#0f1a2b; border-radius:3rem; padding:2rem; text-align:center;">
+            <p style="font-size:1.8rem; font-weight:300;">“Membina penyelesaian teknologi yang pintar, beretika dan inklusif.”</p>
+            <p style="font-size:2.2rem; font-weight:700; color:#2dd4bf; margin-top:1rem;">Automate Intelligently. Share Openly. Innovate Globally.</p>
+        </div>
+    </section>
+
+    <!-- HUBUNGI & FORM -->
+    <section style="padding: 0 2.5rem 2.5rem;">
+        <div class="section-title"><i class="fas fa-address-card"></i> CONNECT</div>
+        <div class="grid-2">
+            <div class="data-card">
+                <h3><i class="fab fa-github"></i> Social Graph</h3>
+                <ul class="email-list">
+                    <li><i class="fab fa-linkedin"></i> linkedin.com/in/sazwan96</li>
+                    <li><i class="fab fa-github"></i> github.com/Sazwanend</li>
+                    <li><i class="fab fa-gitlab"></i> gitlab.com/sazwan96</li>
+                    <li><i class="fas fa-blog"></i> medium / giblub / fairbase</li>
+                </ul>
+            </div>
+            <div class="contact-panel">
+                <h3 style="margin-bottom:1.5rem;">📡 Send Message</h3>
+                <form onsubmit="event.preventDefault(); alert('🚀 Demo: mesej dihantar (simulasi).')">
+                    <div class="form-group"><label>Nama</label><input type="text" placeholder="nama..."></div>
+                    <div class="form-group"><label>Emel</label><input type="email" placeholder="emel..."></div>
+                    <div class="form-group"><label>Mesej</label><textarea rows="3" placeholder="taip..."></textarea></div>
+                    <button class="btn-bigdata" type="submit"><i class="fas fa-paper-plane"></i> Hantar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAP JARI DIGITAL & FOOTER -->
+    <footer>
+        <p>© 2025 Muhamad Sazwan Bin Ismail · All rights reserved · bigdata · storage edition</p>
+        <p style="margin-top:0.5rem;">
+            SHA‑256: 32D8A53CC4C299E60424CD0DE96D3B06575D51 · 
+            SHA‑1: A591A6D40BF420404A011733CFB7B190D62C65 · 
+            MD5: E10ADC3949BA59ABBE56E057F20F88<br>
+            <a href="https://sazwan96.github.io">https://sazwan96.github.io</a>
+        </p>
+    </footer>
+</div>
+<!-- container end -->
+</body>
+</html>
