@@ -1,0 +1,108 @@
+## 🚀 Menyediakan Repositori GitHub untuk Projek **codepaul**
+
+Anda telah membangunkan projek **React + Node.js + Express** dengan struktur seperti di bawah. Sekarang tiba masanya untuk meletakkannya di GitHub.
+
+```
+codepaul/
+├── client/
+├── server/
+├── .github/
+├── .gitignore
+├── README.md
+└── LICENSE
+```
+
+### 📌 Pilihan 1: Buat Repositori Baru di GitHub (melalui laman web)
+
+1. Buka [GitHub](https://github.com) dan log masuk.
+2. Klik butang **+** di sudut kanan atas, pilih **New repository**.
+3. Isi butiran:
+   - **Repository name**: `codepaul` (atau nama pilihan anda, contoh: `my-app`)
+   - **Description**: (optional) "Full-stack React + Node.js + Express with CI/CD"
+   - **Public** atau **Private** (pilih mengikut keperluan)
+   - **Jangan** tandakan "Initialize this repository with a README" (kerana kita sudah ada README tempatan).
+4. Klik **Create repository**.
+
+### 📌 Pilihan 2: Buat Repositori Menggunakan GitHub CLI (jika dipasang)
+
+```bash
+gh repo create codepaul/codepaul --public --source=. --remote=origin --push
+```
+
+(Gantikan `codepaul/codepaul` dengan username/repo anda)
+
+---
+
+## 🔗 Menyambung Repositori Tempatan ke GitHub
+
+Selepas repositori kosong sedia di GitHub, jalankan arahan berikut dalam terminal di direktori root projek anda:
+
+```bash
+# Jika anda belum menambah remote
+git remote add origin https://github.com/codepaul/codepaul.git
+
+# Tukar nama branch utama kepada main (jika masih master)
+git branch -M main
+
+# Push semua commit ke GitHub
+git push -u origin main
+```
+
+> **Nota**: Gantikan `codepaul/codepaul.git` dengan URL repositori anda yang sebenar.
+
+---
+
+## ✅ Semakan
+
+Selepas push, buka repositori di GitHub – anda akan melihat semua folder dan fail, termasuk `.github/workflows/ci-cd.yml`. Setiap kali anda melakukan `git push` ke branch `main`, GitHub Actions akan menjalankan pipeline CI/CD yang telah ditetapkan.
+
+---
+
+## 🔐 Menyediakan Rahsia (Secrets) untuk Deployment (Pilihan)
+
+Jika anda ingin mengaktifkan langkah deploy dalam GitHub Actions (contohnya ke Vercel, Render, dll.), anda perlu menambah **secrets** di repositori GitHub:
+
+1. Buka repositori di GitHub.
+2. Pergi ke **Settings** → **Secrets and variables** → **Actions**.
+3. Klik **New repository secret**.
+4. Tambah nama (contoh: `VERCEL_TOKEN`) dan nilainya (token daripada Vercel).
+5. Dalam fail workflow, gunakan `${{ secrets.VERCEL_TOKEN }}` untuk merujuknya.
+
+---
+
+## 📦 Struktur Fail yang Telah Disediakan
+
+Ringkasan fail utama yang telah anda hasilkan:
+
+- **`client/`** – Frontend React (dengan `App.js`, komponen Hello, dll.)
+- **`server/`** – Backend Express (dengan `server.js`, routes, dll.)
+- **`.github/workflows/ci-cd.yml`** – Pipeline CI/CD
+- **`.gitignore`** – Fail dan direktori yang dikecualikan
+- **`README.md`** – Dokumentasi projek
+- **`LICENSE`** – Lesen MIT
+
+Pastikan semua fail telah di-commit sebelum push:
+
+```bash
+git add .
+git commit -m "Complete full-stack project with CI/CD"
+git push
+```
+
+---
+
+## 🧪 Uji Pipeline
+
+Selepas push, pergi ke tab **Actions** di repositori GitHub anda. Anda akan melihat workflow `CI/CD Pipeline` sedang berjalan. Klik untuk melihat log. Jika semuanya hijau, tahniah – CI/CD anda berfungsi!
+
+---
+
+## 🎯 Seterusnya
+
+- **Kembangkan projek**: Tambah pangkalan data (MongoDB, PostgreSQL), autentikasi, atau ujian.
+- **Deploy sebenar**: Gunakan Render untuk backend dan Vercel untuk frontend.
+- **Sesuaikan domain**: Beli domain dan pautkan ke perkhidmatan hosting.
+
+Jika anda memerlukan bantuan untuk mana-mana langkah di atas (misalnya menulis konfigurasi deployment untuk Render atau Vercel dalam GitHub Actions), beritahu saya – saya akan bantu!
+
+**Selamat membangun!** 🚀
