@@ -1,0 +1,247 @@
+````markdown name=README.md
+# storage.cloud — Docs & Quickstart
+
+storage.cloud is a quick-reference resource and starter content for working with Google Cloud Storage (GCS). It includes concise how-tos, examples, and small reusable scripts for common tasks such as authenticated access, signed URLs, CORS configuration, and merging data from many objects.
+
+Primary goals
+- Provide clear, copy-pastable commands for common workflows.
+- Give simple code examples (Python) for object operations and CSV merging.
+- Offer troubleshooting tips and security reminders.
+
+Contents
+- index.html — site landing page (simple overview).
+- docs/quickstart.md — authentication, common gsutil/gcloud/bq commands, signed URLs.
+- docs/merge-data.md — guide in Malay for combining files stored in GCS.
+- examples/merge_csv_gcs.py — Python example to merge CSVs in a GCS prefix while handling headers.
+- cors.json — example CORS configuration.
+
+Contributing
+- Send issues or PRs with improvements.
+- Keep examples minimal and focused. Prefer service accounts and least privilege for production.
+
+License
+- Add your preferred license file (e.g., MIT) to the repo root.
+````
+
+```html name=index.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>storage.cloud — Google Cloud Storage quickstart</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; max-width: 900px; margin: 40px auto; line-height: 1.6; padding: 0 20px; }
+    pre{ background:#f6f8fa; padding:10px; overflow:auto; }
+    header {border-bottom:1px solid #eee; margin-bottom:20px;}
+    h1{margin:0;padding:0}
+    nav a{margin-right:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>storage.cloud</h1>
+    <p>Quick reference and starter content for Google Cloud Storage (GCS)</p>
+    <nav>
+      <a href="docs/quickstart.md">Quickstart</a>
+      <a href="docs/merge-data.md">Combine data (Gabungkan data)</a>
+      <a href="examples/merge_csv_gcs.py">Example scripts</a>
+    </nav>
+  </header>
+
+  <section>
+    <h2>Overview</h2>
+    <p>This site contains short guides and example code for:</p>
+    <ul>
+      <li>Authenticated access (gcloud, service accounts, access tokens)</li>
+      <li>Signed URLs for temporary, non-account-based access</li>
+      <li>CORS configuration for browser clients</li>
+      <li>Merging files stored in GCS (CSV, text, etc.)</li>
+      <li>Loading directly into BigQuery for analytics</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Important links</h2>
+    <ul>
+      <li><a href="https://storage.cloud.google.com/">storage.cloud.google.com</a> — web-based browsing (requires Google sign-in)</li>
+      <li><a href="https://console.cloud.google.com/storage/browser">Cloud Console — Storage browser</a></li>
+      <li><a href="https://cloud.google.com/storage/docs">GCS docs</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Get started</h2>
+    <p>Open <code>docs/quickstart.md</code> for a minimal set of commands and examples you can run locally.</p>
+  </section>
+</body>
+</html>
+```
+
+````markdown name=docs/quickstart.md
+# Quickstart — Google Cloud Storage (GCS)
+
+This page collects the most-used commands and short examples for getting started with GCS.
+
+Authentication
+- Local user ADC (Application Default Credentials) — for development:
+  gcloud auth application-default login
+
+- Service account (recommended for servers/apps):
+  1. Create service account in Cloud Console or:
+     gcloud iam service-accounts create my-sa --display-name="My SA"
+  2. Grant needed roles (example: objectViewer):
+     gcloud projects add-iam-policy-binding PROJECT_ID --member="serviceAccount:my-sa@PROJECT_ID.iam.gserviceaccount.com" --role="roles/storage.objectViewer"
+  3. Download key (if needed):
+     gcloud iam service-accounts keys create key.json --iam-account=my-sa@PROJECT_ID.iam.gserviceaccount.com
+
+Get an access token (for Authorization header):
+  gcloud auth print-access-token
+
+Common gsutil commands
+- List buckets:
+  gsutil ls gs://
+
+- List objects in a prefix:
+  gsutil ls gs://BUCKET/PREFIX/
+
+- Download an object:
+  gsutil cp gs://BUCKET/OBJECT ./local-file
+
+- Upload a file:
+  gsutil cp ./local-file gs://BUCKET/OBJECT
+
+- Make an object publicly readable (not recommended for sensitive data):
+  gsutil acl ch -u AllUsers:R gs://BUCKET/OBJECT
+
+Signed URLs
+- Create a signed URL for temporary access (using gsutil with a service account key):
+  gsutil signurl -d 1h /path/to/key.json gs://BUCKET/OBJECT
+- Signed URLs are valid up to 7 days when using V4 signing.
+
+CORS example
+- Use cors.json (see repo) and apply:
+  gsutil cors set cors.json gs://BUCKET
+
+Uploading many files / analytics
+- Load CSVs directly to BigQuery (no need to pre-concatenate):
+  bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+
+Notes & troubleshooting
+- Permission denied: ensure the account has roles/storage.objectViewer (or higher) for read, or objectAdmin for writes.
+- Invalid credentials: re-run `gcloud auth application-default login` or refresh service account tokens.
+- CORS errors: configure the bucket CORS and allow the necessary origins and response headers.
+````
+
+````markdown name=docs/merge-data.md
+# Gabungkan Semua Data (Combine all data) — Panduan ringkas
+
+Dokumen ini ditulis dalam Bahasa Melayu untuk arahan cepat bagaimana menggabungkan (merge) fail yang disimpan di Google Cloud Storage.
+
+Soalan awal (jawab jika perlu):
+1. Fail di mana? (satu bucket / beberapa bucket)
+2. Format fail? (CSV/JSON/Parquet)
+3. Saiz anggaran? (MB/GB/TB)
+4. Output dikehendaki? (satu fail di GCS, jadual BigQuery)
+
+Pilihan pantas
+
+Pilihan A — Gabungkan cepat untuk fail CSV kecil/sederhana (one‑shot)
+- Menggunakan gsutil cat (berguna untuk fail kecil, ingat had memori):
+  gsutil cat gs://BUCKET/PATH/*.csv | gsutil cp - gs://BUCKET/PATH/combined.csv
+
+- Nota: Jika setiap CSV mempunyai header, gunakan skrip untuk membuang header bahagian kedua dan seterusnya (contoh di bawah).
+
+Pilihan B — gsutil compose (gabungkan objek tanpa muat turun)
+- gsutil compose gs://BUCKET/part1.csv gs://BUCKET/part2.csv gs://BUCKET/combined.csv
+- Had: 32 objek setiap compose step. Untuk >32, jalankan compose berperingkat (tree compose).
+
+Pilihan C — Muat naik terus ke BigQuery (disarankan untuk analitik besar)
+- BigQuery boleh menerima wildcard CSVs:
+  bq load --autodetect --source_format=CSV dataset.table gs://BUCKET/PATH/*.csv
+
+Pilihan D — Pipeline (untuk dataset besar/penukaran)
+- Gunakan Dataflow (Apache Beam) atau Dataproc (Spark) untuk transformasi dan penulisan semula ke GCS / BigQuery.
+
+Contoh skrip Python — gabung CSV dan buang header berganda
+- Fail contoh: `examples/merge_csv_gcs.py` (berguna jika anda mahu kawalan penuh sebelum muat naik semula).
+
+Perkara penting
+- Pastikan service account/akaun anda mempunyai permission yang sesuai (roles/storage.objectViewer / storage.objectAdmin).
+- Untuk perkongsian hasil: pertimbangkan signed URLs (maks 7 hari) atau tetapkan access controls yang sesuai.
+- Untuk fail besar, elakkan memuatkan semuanya ke RAM — gunakan streaming atau gunakan Dataflow/Dataproc.
+
+Jika anda beritahu saya:
+- lokasi bucket (contoh: gs://my-bucket/data/), format fail, dan ukuran anggaran, saya boleh hasilkan skrip yang diubah suai untuk anda.
+````
+
+```python name=examples/merge_csv_gcs.py
+#!/usr/bin/env python3
+"""
+Merge CSV files in a GCS prefix into one CSV while keeping only the first header.
+Requirements:
+  pip install google-cloud-storage
+Usage:
+  export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
+  python3 examples/merge_csv_gcs.py my-bucket data/prefix/ output/combined.csv
+"""
+import sys
+import csv
+from io import StringIO
+from google.cloud import storage
+
+def merge_csvs(bucket_name, prefix, output_blob_name):
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blobs = sorted([b for b in bucket.list_blobs(prefix=prefix) if b.name.endswith('.csv')])
+
+    out_buf = StringIO()
+    writer = None
+    first = True
+
+    for blob in blobs:
+        print("Reading:", blob.name)
+        data = blob.download_as_text()
+        reader = csv.reader(StringIO(data))
+        header = next(reader, None)
+        if first:
+            writer = csv.writer(out_buf)
+            if header:
+                writer.writerow(header)
+            for row in reader:
+                writer.writerow(row)
+            first = False
+        else:
+            # skip header for subsequent files
+            for row in reader:
+                writer.writerow(row)
+
+    out_blob = bucket.blob(output_blob_name)
+    out_blob.upload_from_string(out_buf.getvalue(), content_type='text/csv')
+    print(f'Uploaded gs://{bucket_name}/{output_blob_name}')
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: merge_csv_gcs.py BUCKET PREFIX OUTPUT_BLOB")
+        print("Example: merge_csv_gcs.py my-bucket data/ output/combined.csv")
+        sys.exit(1)
+    merge_csvs(sys.argv[1], sys.argv[2], sys.argv[3])
+```
+
+```json name=cors.json
+[
+  {
+    "origin": ["https://example.com"],
+    "method": ["GET", "HEAD", "PUT", "POST"],
+    "responseHeader": ["Content-Type", "x-goog-meta-custom"],
+    "maxAgeSeconds": 3600
+  }
+]
+```
+
+If you want, I can:
+- Generate additional localized guides (complete Malay translation).
+- Produce a shell script for large-scale compose (handles >32 parts).
+- Create a Dataflow (Beam) starter pipeline to merge/transform files at scale.
+
+Which follow-up would you like?
