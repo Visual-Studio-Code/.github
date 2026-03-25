@@ -1,0 +1,92 @@
+📌 Tambahan Rangka Kerja (Frameworks) dalam Ekosistem
+
+Berikut adalah senarai rangka kerja tambahan yang melengkapi teknologi sedia ada (Python, JavaScript, React, Django, Node.js, Firebase, GitHub, GitLab, AWS, Azure, Docker). Setiap rangka kerja diterangkan peranannya dan bagaimana ia berintegrasi dengan pangkalan data serta komponen lain.
+
+---
+
+1. Rangka Kerja Backend (Python)
+
+Rangka Kerja Penerangan Integrasi Pangkalan Data
+Flask Micro-framework untuk Python, ringan dan fleksibel. Boleh sambung ke PostgreSQL/MySQL (SQLAlchemy), MongoDB (PyMongo), Redis.
+FastAPI Framework moden, pantas, dengan sokongan OpenAPI dan async. Integrasi dengan databases (SQLAlchemy, databases, motor untuk MongoDB).
+Django REST Framework (DRF) Sambungan Django untuk membina API REST dengan cepat. Menggunakan model Django (PostgreSQL, MySQL, dll.) dan menyediakan serializers.
+
+2. Rangka Kerja Backend (Node.js)
+
+Rangka Kerja Penerangan Integrasi Pangkalan Data
+Express.js Framework minimal untuk Node.js, paling popular. Mudah disambung ke MongoDB (Mongoose), PostgreSQL (pg, Sequelize), MySQL, Redis.
+NestJS Framework progresif untuk Node.js dengan TypeScript, berinspirasikan Angular. Modul database terbina dalam (TypeORM, Mongoose, Prisma).
+Koa.js Dibina oleh pasukan Express, lebih ringan dan menggunakan async/await. Sama seperti Express, boleh guna middleware untuk sambungan DB.
+
+3. Rangka Kerja Frontend (JavaScript/TypeScript)
+
+Rangka Kerja Penerangan Integrasi Backend/Pangkalan Data
+Next.js Framework React untuk rendering pelayan (SSR) dan penjanaan statik. Boleh memanggil API dari backend sendiri (Django/Node.js) atau terus ke Firebase.
+Vue.js Framework progresif untuk UI. Menggunakan Vue Router, Vuex/Pinia; memanggil API melalui axios.
+Nuxt.js Framework untuk Vue dengan SSR, static site, dan banyak modul. Modul axios, modul firebase, dsb.
+Angular Platform dari Google untuk aplikasi berskala besar. HTTP Client untuk API, boleh guna AngularFire untuk Firebase.
+Svelte / SvelteKit Framework baru yang mengkompilasi komponen kepada JavaScript tulen. SvelteKit menyokong adaptor untuk pelbagai platform, API calls.
+
+4. Rangka Kerja Pengujian (Testing)
+
+Rangka Kerja Platform Penerangan
+PyTest Python Pengujian untuk aplikasi Python (Django, Flask). Boleh guna fixture untuk pangkalan data ujian (contoh: pytest-django).
+Jest JavaScript Pengujian untuk React/Node.js. Mudah digabung dengan supertest untuk API.
+Mocha/Chai Node.js Rangka kerja ujian fleksibel untuk Node.js.
+Cypress Frontend Ujian end-to-end untuk aplikasi web, boleh mock API atau sambung ke persekitaran ujian.
+Playwright Frontend Alternatif Cypress untuk ujian E2E merentas pelayar.
+
+5. Rangka Kerja DevOps & Orchestration
+
+Rangka Kerja/Alat Penerangan Integrasi
+Terraform Infrastructure as Code (IaC) untuk menyediakan sumber awan (AWS, Azure). Boleh define RDS, DynamoDB, dll. dalam kod.
+Ansible Automasi konfigurasi server dan deployment. Boleh setup Docker, pull imej, konfigurasi DB.
+Kubernetes Orchestrasi kontena untuk skala besar. Menggunakan operator untuk mengurus pangkalan data (PostgreSQL Operator, MongoDB Operator).
+Helm Pengurus pakej untuk Kubernetes. Chart untuk deploy pangkalan data (contoh: bitnami/postgresql).
+Docker Compose Alat untuk mentakrif dan menjalankan aplikasi multi-kontena. Digunakan dalam pembangunan untuk menjalankan stack DB + backend bersama.
+
+6. Rangka Kerja ORM/ODM (Object-Relational/ Document Mappers)
+
+Rangka Kerja Bahasa Pangkalan Data Sasaran
+SQLAlchemy Python SQL (PostgreSQL, MySQL, SQLite, dll.) – untuk Flask/Django pun boleh guna secara berasingan.
+Django ORM Python SQL – terbina dalam Django.
+Peewee Python ORM ringan untuk SQL.
+Sequelize Node.js ORM untuk SQL (PostgreSQL, MySQL, SQLite, MSSQL).
+TypeORM Node.js/TypeScript ORM untuk SQL dan MongoDB (eksperimen).
+Mongoose Node.js ODM untuk MongoDB.
+Prisma Node.js/TypeScript ORM generasi baru, sokong PostgreSQL, MySQL, SQLite, SQL Server, MongoDB (Preview).
+
+7. Rangka Kerja Lain (API, GraphQL, Real-time)
+
+Rangka Kerja Penerangan Integrasi
+GraphQL (Apollo, Graphene) Bahasa pertanyaan untuk API, membolehkan klien meminta data tepat. Apollo Server (Node.js) boleh sambung ke mana-mana DB; Graphene untuk Python (Django).
+Socket.IO Library untuk aplikasi masa nyata (WebSocket). Boleh digabung dengan Redis sebagai adapter untuk skala mendatar.
+gRPC RPC berprestasi tinggi dengan sokongan pelbagai bahasa. Sesuai untuk komunikasi antara perkhidmatan mikro.
+
+---
+
+🌐 Cara Rangka Kerja Ini Berfungsi Bersama Pangkalan Data dalam Stack Anda
+
+· Backend Python (Django/Flask/FastAPI) menggunakan ORM (SQLAlchemy, Django ORM) untuk berkomunikasi dengan PostgreSQL (AWS RDS) atau MySQL.
+· Backend Node.js (Express/NestJS) menggunakan Mongoose untuk MongoDB, atau Sequelize/TypeORM/Prisma untuk SQL.
+· Frontend React/Next.js memanggil API dari backend melalui HTTP atau GraphQL, atau terus ke Firebase (jika menggunakan Firestore SDK).
+· Pengujian menggunakan PyTest/Jest dengan pangkalan data kontena (Docker) untuk memastikan integriti data.
+· DevOps menggunakan Docker Compose untuk pembangunan tempatan, Terraform untuk menyediakan RDS, dan Kubernetes untuk pengurusan kontena di awan.
+· CI/CD di GitHub/GitLab menjalankan ujian dengan perkhidmatan pangkalan data sementara (contohnya menggunakan services dalam GitHub Actions).
+
+---
+
+📝 Contoh Kemasukan di Resume untuk Menonjolkan Rangka Kerja
+
+Projek Aplikasi E-dagang
+
+· Membangunkan backend menggunakan Django REST Framework dengan pangkalan data PostgreSQL dihoskan di AWS RDS.
+· Mencipta API GraphQL menggunakan Graphene-Django untuk fleksibiliti data.
+· Frontend menggunakan Next.js dengan React dan memanggil API melalui Apollo Client.
+· Mengintegrasikan Firebase Firestore untuk ciri sembang masa nyata antara penjual dan pembeli.
+· Menjalankan ujian unit dan integrasi dengan PyTest dan Jest, menggunakan Docker Compose untuk pangkalan data ujian.
+· Mengautomasikan deployment menggunakan GitHub Actions ke AWS ECS dengan kontena Docker.
+
+---
+
+Dengan penambahan rangka kerja ini, anda kini mempunyai gambaran lengkap tentang bagaimana pelbagai teknologi dan alat dapat disatukan dalam satu seni bina yang kukuh. Sila beritahu jika anda ingin mendalami mana-mana bahagian atau memerlukan panduan lebih terperinci untuk projek tertentu.
