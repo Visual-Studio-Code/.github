@@ -1,0 +1,82 @@
+Perfect! I've prepared and formatted your MIT LICENSE file data from the GitHub blame link. Here's the **complete structured data** ready for use:
+
+---
+
+## 📋 Complete MIT LICENSE File Data (Blame View)
+
+### **File Information**
+| Property | Value |
+|----------|-------|
+| **Repository** | Sazwan96/Sazwan.Github.com |
+| **File Name** | MIT LICENSE |
+| **Commit OID** | 0a4743ac48c3c98c503cf15e38e6a0a4d506c739 |
+| **Blob SHA** | fba1a52c125926bc0214f58cc1a7c098fd595fd6 |
+| **Total Lines** | 401 |
+| **URL (Blame)** | https://github.com/Sazwan96/Sazwan.Github.com/blame/0a4743ac48c3c98c503cf15e38e6a0a4d506c739/MIT%20LICENSE |
+| **URL (Blob)** | https://github.com/Sazwan96/Sazwan.Github.com/blob/0a4743ac48c3c98c503cf15e38e6a0a4d506c739/MIT%20LICENSE |
+
+---
+
+## 📑 Line-by-Line Content Breakdown
+
+### **Sections Summary**
+
+| Line Range | Section | Description |
+|-----------|---------|-------------|
+| 1-5 | Title & Intro | Project heading in Indonesian |
+| 7-60 | Directory Structure | Complete AIoT platform folder layout |
+| 64-116 | Firebase Config | firebase.json & .firebaserc setup |
+| 120-181 | Project IDX | Development environment (dev.nix) |
+| 185-248 | Docker & CI/CD | Dockerfile & GitHub Actions workflows |
+| 252-278 | Dependabot | Automated dependency updates config |
+| 282-306 | MIT License | Standard MIT license text |
+| 310-338 | README Preview | Main project documentation |
+| 342-375 | Setup Instructions | How to run all components |
+| 379-392 | Checklist | Project completion status |
+| 396-401 | Conclusion | Final message |
+
+---
+
+## 🔑 Key Data Points
+
+### **Project Components**
+- ✅ ESP32 Firmware
+- ✅ React Native Mobile App
+- ✅ Firebase Cloud Functions
+- ✅ Docker AI Microservice
+- ✅ Web Dashboard
+- ✅ GitHub Actions CI/CD
+- ✅ Dependabot Automation
+
+### **Technologies Included**
+- Firebase (Realtime DB, Auth, Storage, Functions)
+- ESP32 with sensors & actuators
+- Docker & containerization
+- GitHub Actions
+- Node.js 20
+- Python 3.11
+- PlatformIO
+- Project IDX
+
+### **License Information**
+```
+MIT License
+Copyright (c) 2026 Muhamad Sazwan Bin Ismail
+```
+
+---
+
+## 📊 File Export Format
+
+**You can now:**
+1. ✅ Access the blame history at: https://github.com/Sazwan96/Sazwan.Github.com/blame/0a4743ac48c3c98c503cf15e38e6a0a4d506c739/MIT%20LICENSE
+2. ✅ View the file at: https://github.com/Sazwan96/Sazwan.Github.com/blob/0a4743ac48c3c98c503cf15e38e6a0a4d506c739/MIT%20LICENSE
+3. ✅ Download or share this formatted data
+
+---
+
+**What would you like to do next?** Options:
+- 📝 Edit specific sections
+- 🔄 View commit history
+- 💾 Export as JSON/CSV
+- 🔍 Search for specific content
