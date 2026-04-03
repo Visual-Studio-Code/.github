@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les petits conseils de Médé</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F0E8;
+  --bg2:#EDE8DC;
+  --white:#FDFAF4;
+  --ink:#1C1410;
+  --ink2:#4A3D30;
+  --ink3:#8A7A68;
+  --orange:#D4601A;
+  --orange-light:#FAE8DA;
+  --orange-dark:#A8440E;
+  --green:#2D6A4F;
+  --green-light:#E4F0EB;
+  --yellow:#E8A020;
+  --yellow-light:#FDF3DC;
+  --border:rgba(28,20,16,0.12);
+  --shadow:0 2px 12px rgba(28,20,16,0.1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.65;
+}
+
+/* NAV */
+nav{
+  background:var(--ink);
+  padding:0 2rem;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.nav-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:60px;
+}
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;
+  color:var(--white);
+  letter-spacing:0.05em;
+  text-decoration:none;
+}
+.logo span{color:var(--orange)}
+.nav-links{
+  display:flex;
+  gap:2rem;
+  list-style:none;
+}
+.nav-links a{
+  color:rgba(253,250,244,0.65);
+  text-decoration:none;
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.03em;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--orange)}
+
+/* HERO */
+.hero{
+  background:var(--ink);
+  padding:70px 2rem 80px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'MÉDÉ';
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22vw;
+  position:absolute;
+  right:-2%;
+  bottom:-10%;
+  color:rgba(255,255,255,0.03);
+  letter-spacing:-0.02em;
+  line-height:1;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.hero-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:3rem;
+}
+.hero-badge{
+  display:inline-block;
+  background:var(--orange);
+  color:var(--white);
+  font-size:0.7rem;
+  font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  padding:0.35rem 0.9rem;
+  border-radius:3px;
+  margin-bottom:1.4rem;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,8vw,7rem);
+  color:var(--white);
+  line-height:0.92;
+  letter-spacing:0.02em;
+  margin-bottom:1.5rem;
+}
+.hero h1 em{
+  color:var(--orange);
+  font-style:normal;
+}
+.hero-desc{
+  font-family:'Crimson Pro',serif;
+  font-size:1.15rem;
+  color:rgba(253,250,244,0.6);
+  font-style:italic;
+  max-width:480px;
+  margin-bottom:2.2rem;
+  line-height:1.6;
+}
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:0.6rem;
+  background:var(--orange);
+  color:var(--white);
+  font-weight:500;
+  font-size:0.9rem;
+  padding:0.85rem 1.8rem;
+  border-radius:4px;
+  text-decoration:none;
+  letter-spacing:0.04em;
+  transition:background .2s, transform .15s;
+}
+.hero-cta:hover{background:var(--orange-dark);transform:translateY(-2px)}
+.hero-stats{
+  display:flex;
+  flex-direction:column;
+  gap:1.8rem;
+}
+.hero-stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.5rem;
+  color:var(--orange);
+  line-height:1;
+}
+.hero-stat-label{
+  font-size:0.76rem;
+  color:rgba(253,250,244,0.45);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+/* CATÉGORIES */
+.categories{
+  padding:4rem 2rem 3rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+.section-label{
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--orange);
+  font-weight:500;
+  margin-bottom:0.6rem;
+}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,4vw,2.8rem);
+  color:var(--ink);
+  letter-spacing:0.03em;
+  margin-bottom:2rem;
+  line-height:1;
+}
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1rem;
+}
+.cat-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.5rem 1.25rem 1.3rem;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
+  text-decoration:none;
+  display:block;
+  position:relative;
+  overflow:hidden;
+}
+.cat-card::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:3px;
+  background:var(--orange);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s;
+}
+.cat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.cat-card:hover::after{transform:scaleX(1)}
+.cat-emoji{font-size:2rem;display:block;margin-bottom:0.8rem;line-height:1}
+.cat-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;
+  color:var(--ink);
+  letter-spacing:0.04em;
+  margin-bottom:0.3rem;
+}
+.cat-count{font-size:0.78rem;color:var(--ink3)}
+
+/* ARTICLES */
+.articles-section{
+  background:var(--bg2);
+  padding:4rem 2rem;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.articles-inner{max-width:1200px;margin:0 auto}
+.articles-grid{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  gap:1.5rem;
+}
+.article-hero{
+  background:var(--white);
+  border-radius:10px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .2s;
+  display:flex;
+  flex-direction:column;
+}
+.article-hero:hover{transform:translateY(-3px)}
+.article-hero-img{
+  height:210px;
+  background:linear-gradient(135deg,#2D3A2D 0%,#1C2A1C 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:5rem;
+}
+.article-hero-body{padding:1.75rem;flex:1}
+.article-tag{
+  display:inline-block;
+  font-size:0.68rem;
+  font-weight:500;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  padding:0.28rem 0.7rem;
+  border-radius:3px;
+  margin-bottom:0.85rem;
+}
+.tag-tools{background:var(--orange-light);color:var(--orange-dark)}
+.tag-maison{background:var(--green-light);color:var(--green)}
+.tag-jardin{background:#E8F5E0;color:#2D6A1A}
+.tag-securite{background:#FCEAEA;color:#A82020}
+.tag-cuisine{background:var(--yellow-light);color:#7A5010}
+.article-title{
+  font-family:'Crimson Pro',serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.25;
+  margin-bottom:0.7rem;
+}
+.article-excerpt{
+  font-size:0.9rem;
+  color:var(--ink2);
+  line-height:1.7;
+  margin-bottom:1.2rem;
+}
+.article-meta{
+  font-size:0.76rem;
+  color:var(--ink3);
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+}
+.dot{color:var(--ink3);opacity:0.4}
+.read-more{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-size:0.82rem;
+  font-weight:500;
+  color:var(--orange);
+  text-decoration:none;
+  margin-top:1rem;
+  transition:gap .2s;
+}
+.read-more:hover{gap:0.7rem}
+.articles-side{display:flex;flex-direction:column;gap:1rem}
+.article-card{
+  background:var(--white);
+  border-radius:8px;
+  border:1px solid var(--border);
+  padding:1.2rem 1.4rem;
+  cursor:pointer;
+  transition:transform .2s,border-color .2s;
+  display:flex;
+  gap:1rem;
+  align-items:flex-start;
+}
+.article-card:hover{transform:translateX(4px);border-color:var(--orange)}
+.article-card-emoji{font-size:1.8rem;flex-shrink:0;line-height:1;margin-top:2px}
+.article-card-title{
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.3;
+  margin-bottom:0.3rem;
+}
+.article-card-meta{font-size:0.75rem;color:var(--ink3);font-style:italic}
+
+/* CONSEIL DU JOUR */
+.conseil-du-jour{
+  padding:4rem 2rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+.conseil-box{
+  background:var(--ink);
+  border-radius:12px;
+  padding:3rem;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:2.5rem;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.conseil-box::before{
+  content:'"';
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18rem;
+  position:absolute;
+  right:2rem;top:-2rem;
+  color:rgba(255,255,255,0.03);
+  line-height:1;pointer-events:none;
+}
+.conseil-icon-wrap{
+  width:80px;height:80px;
+  background:var(--orange);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.8rem;
+  flex-shrink:0;
+}
+.conseil-label-top{
+  font-size:0.7rem;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--orange);margin-bottom:0.7rem;
+}
+.conseil-quote{
+  font-family:'Crimson Pro',serif;
+  font-size:1.4rem;font-style:italic;
+  color:rgba(253,250,244,0.9);
+  line-height:1.5;margin-bottom:1rem;
+}
+.conseil-detail{font-size:0.85rem;color:rgba(253,250,244,0.45)}
+
+/* LISTE */
+.list-section{
+  padding:0 2rem 4rem;
+  max-width:1200px;
+  margin:0 auto;
+}
+.conseils-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+.conseil-item{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.3rem 1.5rem;
+  display:flex;
+  gap:1rem;
+  align-items:flex-start;
+  cursor:pointer;
+  transition:border-color .2s, box-shadow .2s;
+}
+.conseil-item:hover{border-color:var(--orange);box-shadow:var(--shadow)}
+.conseil-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;
+  color:var(--bg2);
+  line-height:1;
+  flex-shrink:0;
+  min-width:2.5rem;
+}
+.conseil-item-title{
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;font-weight:600;
+  color:var(--ink);line-height:1.3;margin-bottom:0.3rem;
+}
+.conseil-item-sub{font-size:0.8rem;color:var(--ink3)}
+
+/* FOOTER */
+footer{
+  background:var(--ink);
+  color:rgba(253,250,244,0.45);
+  padding:3rem 2rem;
+  text-align:center;
+}
+.footer-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2rem;color:var(--white);
+  letter-spacing:0.05em;margin-bottom:0.5rem;
+}
+.footer-logo span{color:var(--orange)}
+.footer-sub{
+  font-family:'Crimson Pro',serif;
+  font-style:italic;font-size:1rem;margin-bottom:2rem;
+}
+.footer-links{
+  display:flex;justify-content:center;
+  gap:2rem;list-style:none;margin-bottom:2rem;
+}
+.footer-links a{
+  color:rgba(253,250,244,0.35);text-decoration:none;
+  font-size:0.82rem;transition:color .2s;
+}
+.footer-links a:hover{color:var(--orange)}
+.footer-copy{font-size:0.75rem;color:rgba(253,250,244,0.2)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-inner > *:first-child{opacity:0;animation:fadeUp .7s ease .1s forwards}
+.hero-stats{opacity:0;animation:fadeUp .7s ease .35s forwards}
+
+@media(max-width:800px){
+  .hero-inner{grid-template-columns:1fr;gap:2rem}
+  .hero-stats{flex-direction:row;gap:2rem}
+  .articles-grid{grid-template-columns:1fr}
+  .conseil-box{grid-template-columns:1fr;text-align:center}
+  .conseil-icon-wrap{margin:0 auto}
+  .conseils-list{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">Les petits conseils de <span>Médé</span></a>
+    <ul class="nav-links">
+      <li><a href="#categories">Catégories</a></li>
+      <li><a href="#articles">Conseils</a></li>
+      <li><a href="#vedette">Conseil du jour</a></li>
+      <li><a href="#footer">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">🛠️ Conseils pratiques &amp; gratuits</div>
+      <h1>Les petits<br>conseils<br>de <em>Médé</em></h1>
+      <p class="hero-desc">Du bon sens, de l'expérience, et des astuces concrètes pour tout faire vous-même — sans prise de tête.</p>
+      <a href="#articles" class="hero-cta">Voir les conseils ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">48</div>
+        <div class="hero-stat-label">Conseils publiés</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">12</div>
+        <div class="hero-stat-label">Catégories</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">Gratuit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="categories" id="categories">
+  <div class="section-label">Parcourir par thème</div>
+  <div class="section-title">Toutes les catégories</div>
+  <div class="cat-grid">
+    <a class="cat-card" href="#"><span class="cat-emoji">🪚</span><div class="cat-name">Outillage</div><div class="cat-count">9 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">🏠</span><div class="cat-name">Maison</div><div class="cat-count">11 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">🧱</span><div class="cat-name">Carrelage & sol</div><div class="cat-count">6 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">⚡</span><div class="cat-name">Électricité</div><div class="cat-count">5 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">🌿</span><div class="cat-name">Jardin</div><div class="cat-count">8 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">🚰</span><div class="cat-name">Plomberie</div><div class="cat-count">4 conseils</div></a>
+    <a class="cat-card" href="#"><span class="cat-emoji">🎨</span><div class="cat-name">Peinture</div><div class="cat-count">5 conseils</div></a>
+  </div>
+</section>
+
+<section class="articles-section" id="articles">
+  <div class="articles-inner">
+    <div class="section-label">À la une</div>
+    <div class="section-title">Conseils populaires</div>
+    <div class="articles-grid">
+      <div class="article-hero">
+        <div class="article-hero-img">🪚</div>
+        <div class="article-hero-body">
+          <span class="article-tag tag-tools">Outillage</span>
+          <div class="article-title">Comment se servir d'une tronçonneuse en toute sécurité</div>
+          <div class="article-excerpt">La tronçonneuse est un outil puissant — et dangereux si on ne sait pas l'utiliser. Médé vous explique les bons gestes : équipements obligatoires (casque, gants anti-coupure, jambières), comment démarrer en douceur, et les erreurs à ne jamais commettre avant d'abattre votre premier arbre.</div>
+          <div class="article-meta">
+            <span>Par Médé</span>
+            <span class="dot">·</span>
+            <span>5 min de lecture</span>
+            <span class="dot">·</span>
+            <span>Niveau débutant</span>
+          </div>
+          <a class="read-more" href="#">Lire le conseil →</a>
+        </div>
+      </div>
+      <div class="articles-side">
+        <div class="article-card">
+          <div class="article-card-emoji">🧱</div>
+          <div>
+            <div class="article-card-title">Poser du carrelage soi-même, étape par étape</div>
+            <div class="article-card-meta">Maison · 8 min · Niveau intermédiaire</div>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-card-emoji">🔌</div>
+          <div>
+            <div class="article-card-title">Remplacer une prise électrique sans électricien</div>
+            <div class="article-card-meta">Électricité · 4 min · Niveau facile</div>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-card-emoji">🚰</div>
+          <div>
+            <div class="article-card-title">Déboucher un évier avec des produits naturels</div>
+            <div class="article-card-meta">Plomberie · 3 min · Niveau facile</div>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-card-emoji">🎨</div>
+          <div>
+            <div class="article-card-title">Peindre un mur proprement sans coulures</div>
+            <div class="article-card-meta">Peinture · 6 min · Niveau facile</div>
+          </div>
+        </div>
+        <div class="article-card">
+          <div class="article-card-emoji">🌿</div>
+          <div>
+            <div class="article-card-title">Tailler une haie au bon moment de l'année</div>
+            <div class="article-card-meta">Jardin · 4 min · Niveau facile</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="conseil-du-jour" id="vedette">
+  <div class="conseil-box">
+    <div class="conseil-icon-wrap">💡</div>
+    <div>
+      <div class="conseil-label-top">Le conseil du jour</div>
+      <div class="conseil-quote">« Avant de démarrer une tronçonneuse, vérifiez toujours le niveau d'huile de chaîne — une chaîne sèche s'use en quelques secondes et peut casser sans prévenir. »</div>
+      <div class="conseil-detail">— Médé, 30 ans d'expérience dans le bois et le bricolage</div>
+    </div>
+  </div>
+</section>
+
+<section class="list-section">
+  <div class="section-label">Tous les conseils</div>
+  <div class="section-title">Dernières publications</div>
+  <div class="conseils-list">
+    <div class="conseil-item"><div class="conseil-num">01</div><div><div class="conseil-item-title">Comment affûter une chaîne de tronçonneuse</div><div class="conseil-item-sub">Outillage · 4 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">02</div><div><div class="conseil-item-title">Préparer un sol avant de poser du carrelage</div><div class="conseil-item-sub">Maison · 6 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">03</div><div><div class="conseil-item-title">Choisir le bon coulis pour les joints de carrelage</div><div class="conseil-item-sub">Maison · 3 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">04</div><div><div class="conseil-item-title">Comment planter un arbre fruitier dans son jardin</div><div class="conseil-item-sub">Jardin · 7 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">05</div><div><div class="conseil-item-title">Réparer une fuite sous un évier</div><div class="conseil-item-sub">Plomberie · 5 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">06</div><div><div class="conseil-item-title">Appliquer du mastic autour d'une fenêtre</div><div class="conseil-item-sub">Maison · 4 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">07</div><div><div class="conseil-item-title">Installer une étagère murale sans fissures</div><div class="conseil-item-sub">Maison · 5 min</div></div></div>
+    <div class="conseil-item"><div class="conseil-num">08</div><div><div class="conseil-item-title">Entretenir sa tondeuse en début de saison</div><div class="conseil-item-sub">Jardin · 6 min</div></div></div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="footer-logo">Les petits conseils de <span>Médé</span></div>
+  <div class="footer-sub">Du bon sens partagé avec plaisir.</div>
+  <ul class="footer-links">
+    <li><a href="#">Accueil</a></li>
+    <li><a href="#">Catégories</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Mentions légales</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Les petits conseils de Médé — Fait avec passion 🛠️</div>
+</footer>
+
+</body>
+</html>
